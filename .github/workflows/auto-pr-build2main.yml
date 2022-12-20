@@ -1,0 +1,36 @@
+name: auto pr build 2 main
+on:
+  pull_request:
+    branches: [ "build" ]
+jobs:
+  auto-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: create pull request
+        run: |
+          sleep 5m
+          gh pr create -B main -H build --title 'Auto pr build into main' --body 'Automatically created by gh-actions.'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+
+  triage:
+    needs: [ "auto-pr" ]
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/labeler@v4
+      with:
+        repo-token: "${{ secrets.GH_PAT }}"
+  
+  auto-merge:
+    needs: [ "triage" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: merge pull request
+        run: gh pr merge --squash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}

@@ -1,0 +1,1 @@
+The versioning folder is only used to house the "downgrade" option for Office 365 products. Enterprise is the standard for everything.
