@@ -6,7 +6,7 @@ Write-Output "Last Updated: ${LastUpdate}"
 
 
 <# Microsoft 365 Values #>
-$m365_version = "Business"
+$m365_version = "Enterprise"
 $m365_channel = "Current"
 $m365_build = "Standard"
 $m365_project_base = "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365"
@@ -25,7 +25,7 @@ $license_pdf = $license_data.Links |
 $new_app = [applicationPayload]::new()
 $new_app.Category = "Microsoft"
 $new_app.Publisher = "Microsoft 365"
-$new_app.Name = "Single Apps for Business (Standard)"
+$new_app.Name = "Single Apps for Enterprise (Standard)"
 $new_app.Lcid = @("MUI")
 $new_app.CpuArch = @("x86")
 $new_app.Homepage = "https://microsoft365.com/"

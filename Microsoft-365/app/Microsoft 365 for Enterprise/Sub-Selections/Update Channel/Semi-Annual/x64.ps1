@@ -25,9 +25,9 @@ $license_pdf = $license_data.Links |
 $new_app = [applicationPayload]::new()
 $new_app.Category = "Microsoft"
 $new_app.Publisher = "Microsoft 365"
-$new_app.Name = "Single Apps for Business (Standard)"
+$new_app.Name = "Business Semi-Annual Channel"
 $new_app.Lcid = @("MUI")
-$new_app.CpuArch = @("x86")
+$new_app.CpuArch = @("x64")
 $new_app.Homepage = "https://microsoft365.com/"
 $new_app.Copyright = "Copyright (c) $((Get-Date).ToString('yyyy')) Microsoft. All rights reserved."
 $new_app.Icon = "$($m365_project_base)/img/microsoft365.png"
@@ -55,8 +55,8 @@ $version_info = Invoke-WebRequest -UseBasicParsing -Uri $version_url |
     Select-Object -ExpandProperty Matches -First 1 | 
     Select-Object -ExpandProperty Value
 $new_app.Version = $version_info.Replace('Version ','').Replace(' (','.').Replace('Build ','').Replace(')','')
-$new_app.Filename = "install-m365-single-apps-$($m365_version.ToLower())-$($m365_channel.ToLower())-$($m365_build.ToLower()).ps1"
-$new_app.AbsoluteUri = "$($m365_project_base)/app/Microsoft%20365%20for%20$($m365_version)/Sub-Selections/Single%20Apps/$($new_app.Filename)"
+$new_app.Filename = "install-m365-apps-$($m365_version.ToLower())-$($m365_channel.ToLower())-$($m365_build.ToLower()).ps1"
+$new_app.AbsoluteUri = "$($m365_project_base)/app/Microsoft%20365%20for%20$($m365_version)/$($new_app.Filename)"
 $new_app.Executable = 'script'
 
 
