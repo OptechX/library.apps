@@ -6,8 +6,8 @@
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/GetGithubReleaseDownload.ps1)
 
 # set category Utility
-$env:applicationCategory = "Utility"
-$ps1_files = Get-ChildItem -Path $env:applicationCategory -Recurse -Filter "*.ps1"
+$Env:applicationCategory = "Utility"
+$ps1_files = Get-ChildItem -Path $Env:applicationCategory -Recurse -Filter "*.ps1"
 Write-Output "Matched $($ps1_files.Length) manifests"
 foreach ($ps1_file in $ps1_files)
 {

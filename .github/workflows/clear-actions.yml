@@ -14,4 +14,4 @@ jobs:
           --paginate -q '.workflow_runs[] | select(.head_branch != "master") | "\(.id)"' | \
           xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE
         env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN_OPTECHX }}

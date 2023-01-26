@@ -11,7 +11,7 @@ jobs:
       - name: create pull request
         run: gh pr create -B build -H dev --title 'Auto pr dev into build' --body 'Automatically created by gh-actions.'
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_OPTECHX }}
 
   triage:
     needs: [ "auto-pr" ]
@@ -22,7 +22,7 @@ jobs:
     steps:
     - uses: actions/labeler@v4
       with:
-        repo-token: "${{ secrets.GH_PAT }}"
+        repo-token: "${{ secrets.GH_TOKEN_OPTECHX }}"
   
   auto-merge:
     needs: [ "triage" ]
@@ -32,4 +32,4 @@ jobs:
       - name: merge pull request
         run: gh pr merge --squash
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_OPTECHX }}
