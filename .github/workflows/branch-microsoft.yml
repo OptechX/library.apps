@@ -35,7 +35,7 @@ jobs:
           updates=$(date +%Y%m%d%H%M%S)
           git -C ./library.apps.images config user.name 'Auto Commit'
           git -C ./library.apps.images config user.email 'auto-commit@users.noreply.github.com'
-          git -C ./library.apps.images remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/OptechX/library.apps.images
+          git -C ./library.apps.images remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN_OPTECHX }}@github.com/OptechX/library.apps.images
           git -C ./library.apps.images add .
           git -C ./library.apps.images commit -m "$updates"
           git -C ./library.apps.images push
@@ -70,7 +70,7 @@ jobs:
           updates=$(date +%Y%m%d%H%M%S)
           git -C ./library.apps.images config user.name 'Auto Commit'
           git -C ./library.apps.images config user.email 'auto-commit@users.noreply.github.com'
-          git -C ./library.apps.images remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/OptechX/library.apps.images
+          git -C ./library.apps.images remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN_OPTECHX }}@github.com/OptechX/library.apps.images
           git -C ./library.apps.images add .
           git -C ./library.apps.images commit -m "$updates"
           git -C ./library.apps.images push
@@ -84,7 +84,7 @@ jobs:
       - name: create pull request
         run: gh pr create -B dev -H 'microsoft' --title 'Auto pr microsoft into dev' --body 'Automatically created by gh-actions.'
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_OPTECHX }}
 
   triage:
     needs: [ "auto-pr" ]
@@ -95,7 +95,7 @@ jobs:
     steps:
     - uses: actions/labeler@v4
       with:
-        repo-token: "${{ secrets.GH_PAT }}"
+        repo-token: "${{ secrets.GH_TOKEN_OPTECHX }}"
   
   auto-merge:
     needs: [ "auto-pr", "microsoft", "triage" ]
@@ -105,4 +105,4 @@ jobs:
       - name: merge pull request
         run: gh pr merge --squash
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_OPTECHX }}
