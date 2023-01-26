@@ -7,14 +7,14 @@ Write-Output "Last Updated: ${LastUpdate}"
 
 <# Create static new object #>
 $new_app = [applicationPayload]::new()
-$new_app.Category = $env:applicationCategory
+$new_app.Category = $Env:applicationCategory
 $new_app.Publisher = "Apple Inc."
 $new_app.Name = "iTunes"
 $new_app.Lcid = @("en-US")
 $new_app.CpuArch = @("x86")
 $new_app.Homepage = "https://www.apple.com/itunes/"
 $new_app.Copyright = "Apple Inc. All rights reserved."
-$new_app.Icon = "https://github.com/OptechX/library.apps.images/raw/main/$($env:applicationCategory)/Apple%20Inc./iTunes/icon.png"
+$new_app.Icon = "https://github.com/OptechX/library.apps.images/raw/main/$($Env:applicationCategory)/Apple%20Inc./iTunes/icon.png"
 $new_app.LicenseAccept = $false
 $new_app.Docs = "https://support.apple.com/itunes"
 $new_app.License = "http://www.apple.com/legal/terms/site.html"
@@ -91,14 +91,14 @@ $app_name = $new_app.Name
 $new_app.UID = $new_pkg.uid
 
 try {
-    $matched_data = Invoke-RestMethod -Uri "${env:ENGINE_API_URI}/v1/Application/${app_publisher}/${app_name}" -Method Get -UseBasicParsing -Headers @{accept="text/plain"} -ErrorAction Stop
+    $matched_data = Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application/${app_publisher}/${app_name}" -Method Get -UseBasicParsing -Headers @{accept="text/plain"} -ErrorAction Stop
     switch($matched_data.Length)
     {
         0 {
             $json = $new_pkg | ConvertTo-Json
             try {
                 Write-Output "Importing UID: $($new_pkg.uid)"
-                Invoke-RestMethod -Uri "${env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
+                Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
             }
             catch {
                 Write-Output "unable to post new data, pre-updates"
@@ -131,7 +131,7 @@ try {
                     $int_pkg.summary = $new_app.Summary
                     $json = $int_pkg | ConvertTo-Json
                     try {
-                        Invoke-RestMethod -Uri "${env:ENGINE_API_URI}/v1/Application/$($int_pkg.id)" -Method Put -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
+                        Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application/$($int_pkg.id)" -Method Put -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
                     } catch {
                         Write-Output "match in matched_data error"
                     }
@@ -159,7 +159,7 @@ try {
                     $int_pkg.summary = $new_app.Summary
                     $json = $int_pkg | ConvertTo-Json
                     try {
-                        Invoke-RestMethod -Uri "${env:ENGINE_API_URI}/v1/Application/$($int_pkg.id)" -Method Put -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
+                        Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application/$($int_pkg.id)" -Method Put -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
                     } catch {
                         Write-Output "match in matched_data error"
                     }
@@ -173,14 +173,14 @@ try {
                 $new_match = $match | ConvertTo-Json
                 $temp_id = $match.id
                 try {
-                    Invoke-RestMethod -Uri "${env:ENGINE_API_URI}/v1/Application/${temp_id}" -Method Put -UseBasicParsing -Body $new_match -ContentType "application/json" -ErrorAction Stop
+                    Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application/${temp_id}" -Method Put -UseBasicParsing -Body $new_match -ContentType "application/json" -ErrorAction Stop
                 } catch {
                     Write-Output "match in matched_data error"
                 }
             }
             $json = $new_pkg | ConvertTo-Json
             try {
-                Invoke-RestMethod -Uri "${env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
+                Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
             }
             catch {
                 Write-Output "unable to post new data following updates"
@@ -195,7 +195,7 @@ catch {
             $json = $new_pkg | ConvertTo-Json
             try {
                 Write-Output "Importing UID: $($new_pkg.uid)"
-                Invoke-RestMethod -Uri "${env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
+                Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
             }
             catch {
                 Write-Output "Unable to post new data, pre-updates"
