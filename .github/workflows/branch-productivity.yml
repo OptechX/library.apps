@@ -15,7 +15,7 @@ jobs:
         shell: pwsh
         run: ./lib/tranches/productivity.ps1
         env:
-          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
 
       - name: Clone library.apps.images repo
         run: |
