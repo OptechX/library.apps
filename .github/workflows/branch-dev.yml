@@ -4,7 +4,7 @@ on:
     branches: [ "dev" ]
   workflow_dispatch:
 jobs:
-  internet:
+  special:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
