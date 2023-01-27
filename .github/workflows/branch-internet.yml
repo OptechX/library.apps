@@ -1,7 +1,7 @@
 name: internet Only
 on:
   push:
-    branches: [ "internet","dev" ]
+    branches: [ "internet" ]
   workflow_dispatch:
 jobs:
   internet:
