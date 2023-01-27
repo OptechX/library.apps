@@ -8,20 +8,19 @@ Write-Output "Last Updated: ${LastUpdate}"
 <# Create static new object #>
 $new_app = [applicationPayload]::new()
 $new_app.Category = $Env:applicationCategory
-$new_app.Publisher = "Mozilla"
-$new_app.Name = "Firefox"
+$new_app.Publisher = ""
+$new_app.Name = ""
 $new_app.Lcid = @("en-US")
-$new_app.CpuArch = @("x86")
-$new_app.Homepage = "https://www.mozilla.org/en-US/firefox/new/"
-$new_app.Copyright = "Copyright (c) 1998-$((Get-Date).ToString('yyyy')) Mozilla Foundation and its contributors"
-$new_app.Icon = "https://github.com/OptechX/library.apps.images/raw/main/$($Env:applicationCategory)/Mozilla/Firefox/icon.svg"
+$new_app.CpuArch = @("")
+$new_app.Homepage = ""
+$new_app.Copyright = ""
+$new_app.Icon = "https://github.com/OptechX/library.apps.images/raw/main/$($Env:applicationCategory)/xxxxx/xxxxx/icon.svg"
 $new_app.LicenseAccept = $false
-$new_app.Docs = "https://developer.mozilla.org/en-US/Firefox"
-$new_app.License = "https://www.mozilla.org/en-US/MPL/2.0/"
-$new_app.Tags = @("browser","mozilla","firefox")
-$new_app.Summary = "Everyone deserves access to the internet - your language should never be a barrier."
+$new_app.Docs = ""
+$new_app.License = ""
+$new_app.Tags = @()
+$new_app.Summary = ""
 $new_app.RebootRequired = $false
-
 
 
 <# Get icon.png if not already obtained #>
@@ -54,22 +53,18 @@ if ($new_app.GithubUrl -ne [string]::Empty)
 }
 else
 {
-    $version_url = 'https://www.mozilla.org/en-US/firefox/all/'
-    $download_page = Invoke-WebRequest -UseBasicParsing -Uri $version_url
-    $rgx = "download.mozilla.*product=firefox-msi.*(&amp;|&)os=win(&amp;|&)lang=en-US"
-    $url = $download_page.links | 
-        Where-Object -FilterScript { $_.href -match $rgx } | 
-        Where-Object -FilterScript { $_.href -NotMatch 'stub|next' } | 
-        Select-Object -First 1 -Expand href
-    $response = [System.Net.Http.HttpClient]::new().GetAsync($url)
-    $new_app.Version = $response.Result.RequestMessage.RequestUri.OriginalString | 
-        Select-String -Pattern 'releases\/\d{3}\.\d{1,3}\.\d{0,3}' | 
-        Select-Object -ExpandProperty Matches -First 1 | 
-        Select-String -Pattern '\d{3}\.\d{1,3}\.\d{0,3}' | 
+    $version_url = ''
+    $download_page = Invoke-WebRequest -UseBasicParsing -Uri $version_url -DisableKeepAlive
+    $new_app.Version = $download_page.Content | 
+        Select-String -Pattern '' | 
         Select-Object -ExpandProperty Matches -First 1 | 
         Select-Object -ExpandProperty Value
-    $new_app.Filename = (Split-Path -Path $response.Result.RequestMessage.RequestUri.OriginalString -Leaf).Replace('%20',' ')
-    $new_app.AbsoluteUri = $response.Result.RequestMessage.RequestUri.OriginalString
+    $new_app.Filename = Split-Path -Path ($download_page.Links | 
+        Select-Object href | 
+        Where-Object -FilterScript {$_ -match "$($new_app.Version.Replace('.',''))-x64.msi"}).href -Leaf
+    $new_app.AbsoluteUri = "https://7-zip.org/$(($download_page.Links | 
+        Select-Object href | 
+        Where-Object -FilterScript {$_ -match "$($new_app.Version.Replace('.',''))-x64.msi"}).href)"
     $new_app.Executable = 'msi'
 }
 
