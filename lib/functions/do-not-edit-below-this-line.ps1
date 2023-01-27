@@ -163,8 +163,11 @@ function Invoke-DoNotEditBelowThisLine {
 
                     # not found existing UID, create new payload and update
                     else {
-                        Write-Output "Not found UID: ${uid}"
+                        Write-Output "Not found UID: ${APP_UID}"
                         Write-Output "Creating new application..."
+
+                        # convert to json object for the else
+                        $json = $new_app_package | ConvertTo-Json
 
                         try {
                             Write-Output "Importing new UID: ${APP_UID}"
