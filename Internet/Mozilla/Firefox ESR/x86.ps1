@@ -72,9 +72,9 @@ else
         Select-String -Pattern '\d{3}\.([0-9a-zA-Z\.]+)' |
         Select-Object -ExpandProperty Matches -First 1 |
         Select-Object -ExpandProperty Value
-    $new_app.Filename = (Split-Path -Path $response.Result.RequestMessage.RequestUri.OriginalString -Leaf).Replace('%20',' ')
-    $new_app.AbsoluteUri = $response.Result.RequestMessage.RequestUri.OriginalString
-    $new_app.Executable = 'msi'
+    # $new_app.Filename = (Split-Path -Path $response.Result.RequestMessage.RequestUri.OriginalString -Leaf).Replace('%20',' ')
+    # $new_app.AbsoluteUri = $response.Result.RequestMessage.RequestUri.OriginalString
+    # $new_app.Executable = 'msi'
 }
 
 
