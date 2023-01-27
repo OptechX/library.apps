@@ -6,7 +6,7 @@ Write-Output "Last Updated: ${LastUpdate}"
 
 
 <# Create static new object #>
-$new_app = [applicationPackage]::new()
+$new_app = [applicationPayload]::new()
 $new_app.Category = $Env:applicationCategory
 $new_app.Publisher = "Google Inc."
 $new_app.Name = "Chrome"
@@ -57,9 +57,9 @@ else
     $download_page = Invoke-WebRequest -UseBasicParsing -Uri $version_url -DisableKeepAlive
     $new_app.Version = $download_page | ConvertFrom-Csv | Select-Object -ExpandProperty current_version
     $download_url = 'https://dl.google.com/tag/s/dl/chrome/install/googlechromestandaloneenterprise64.msi'
-    # $new_app.Filename = Split-Path -Path $download_url -Leaf
-    # $new_app.AbsoluteUri = $download_url
-    # $new_app.Executable = 'msi'
+    $new_app.Filename = Split-Path -Path $download_url -Leaf
+    $new_app.AbsoluteUri = $download_url
+    $new_app.Executable = 'msi'
 }
 
 
