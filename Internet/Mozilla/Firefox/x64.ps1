@@ -76,4 +76,5 @@ else
 
 
 <# ============== DO NOT EDIT BELOW THIS LINE ============== #>
+$new_app
 Invoke-DoNotEditBelowThisLine -InputPayload $new_app
