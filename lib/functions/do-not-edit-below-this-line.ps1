@@ -64,7 +64,7 @@ function Invoke-DoNotEditBelowThisLine {
 
         #region Main Logic
         try {
-            $api_response = Invoke-WebRequest -Uri $API_RESPONSE_URI -Method Get -UseBasicParsing -SkipHttpErrorCheck -ErrorAction Stop
+            $api_response = Invoke-WebRequest -Uri $API_RESPONSE_URI -Method Get -UseBasicParsing -SkipHttpErrorCheck
             <# if the $api_response is unable to communicate with the API endpoint, this is a main logic error, and will
             break down to to the catch statement and report back to the CI/CD this has occured, else the value will be stored for
             updating teh API endpoint with additional/new data #>
