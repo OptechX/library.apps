@@ -62,15 +62,16 @@ else
         Where-Object -FilterScript { $_.href -NotMatch 'stub|next' } | 
         Select-Object -First 1 -Expand href
     $response = [System.Net.Http.HttpClient]::new().GetAsync($url)
-    $new_app.Version = $response.Result.RequestMessage.RequestUri.OriginalString | 
-        Select-String -Pattern 'releases\/\d{3}\.\d{1,3}\.\d{0,3}' | 
+    $new_app.Version = ($response.Result.RequestMessage.RequestUri.OriginalString | 
+        Select-String -Pattern 'releases\/\d.*\/win' | 
+        Select-Object -ExpandProperty Matches -First 1 |
+        Select-Object -ExpandProperty Value |
+        Select-String -Pattern '\/([^\/]*)\/' |
         Select-Object -ExpandProperty Matches -First 1 | 
-        Select-String -Pattern '\d{3}\.\d{1,3}\.\d{0,3}' | 
-        Select-Object -ExpandProperty Matches -First 1 | 
-        Select-Object -ExpandProperty Value
-    # $new_app.Filename = (Split-Path -Path $response.Result.RequestMessage.RequestUri.OriginalString -Leaf).Replace('%20',' ')
-    # $new_app.AbsoluteUri = $response.Result.RequestMessage.RequestUri.OriginalString
-    # $new_app.Executable = 'msi'
+        Select-Object -ExpandProperty Value).Replace('/','')
+    $new_app.Filename = (Split-Path -Path $response.Result.RequestMessage.RequestUri.OriginalString -Leaf).Replace('%20',' ')
+    $new_app.AbsoluteUri = $response.Result.RequestMessage.RequestUri.OriginalString
+    $new_app.Executable = 'msi'
 }
 
 

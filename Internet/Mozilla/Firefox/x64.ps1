@@ -62,13 +62,13 @@ else
         Where-Object -FilterScript { $_.href -NotMatch 'stub|next' } | 
         Select-Object -First 1 -Expand href
     $response = [System.Net.Http.HttpClient]::new().GetAsync($url)
-    $new_app.Version = $response.Result.RequestMessage.RequestUri.OriginalString | 
+    $new_app.Version = ($response.Result.RequestMessage.RequestUri.OriginalString | 
         Select-String -Pattern 'releases\/\d.*\/win' | 
         Select-Object -ExpandProperty Matches -First 1 |
         Select-Object -ExpandProperty Value |
-        Select-String -Pattern '\d([^\/\/]*)\d' |
+        Select-String -Pattern '\/([^\/]*)\/' |
         Select-Object -ExpandProperty Matches -First 1 | 
-        Select-Object -ExpandProperty Value
+        Select-Object -ExpandProperty Value).Replace('/','')
     $new_app.Filename = (Split-Path -Path $response.Result.RequestMessage.RequestUri.OriginalString -Leaf).Replace('%20',' ')
     $new_app.AbsoluteUri = ($response.Result.RequestMessage.RequestUri.OriginalString).Replace('win32','win64')
     $new_app.Executable = 'msi'
