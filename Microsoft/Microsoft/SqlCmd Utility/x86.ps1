@@ -14,7 +14,7 @@ $new_app.Lcid = @("en-US")
 $new_app.CpuArch = @("x86")
 $new_app.Homepage = "https://learn.microsoft.com/en-us/sql/tools/sqlcmd-utility?view=sql-server-ver16"
 $new_app.Copyright = "Copyright (c) 2016-$((Get-Date).ToString('yyyy')) Microsoft."
-$new_app.Icon = "https://github.com/OptechX/library.apps.images/raw/main/$($Env:applicationCategory)/Microsoft/sqlcmd%20Utility/icon.png"
+$new_app.Icon = "https://github.com/OptechX/library.apps.images/raw/main/$($Env:applicationCategory)/Microsoft/SqlCmd%20Utility/icon.png"
 $new_app.LicenseAccept = $false
 $new_app.Docs = "https://learn.microsoft.com/en-us/sql/tools/sqlcmd-utility?view=sql-server-ver16"
 $new_app.License = "https://learn.microsoft.com/en-us/sql/opbuildpdf/34e89e264abfe116ed984318f4f944e6/toc.pdf?branch=live&view=sql-server-ver16"
