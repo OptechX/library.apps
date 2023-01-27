@@ -34,7 +34,7 @@ function Invoke-DoNotEditBelowThisLine {
         [System.String]$APP_NAME = $InputPayload.Name
         [System.String]$APP_VERSION = $InputPayload.Version
         [System.String]$APP_UID = "$($APP_PUBLISHER.ToLower() -replace "[^a-zA-Z0-9]")::$($APP_NAME.ToLower() -replace "[^a-zA-Z0-9]")::$($APP_VERSION.ToLower() -replace "[^a-zA-Z0-9\.\-]")"
-        [System.String]$API_RESPONSE_URI = "${Env:ENGINE_API_URI}/v1/Application/${APP_PUBLISHER}/${APP_NAME}".Replace(' ','%20')
+        [System.String]$API_RESPONSE_URI = "https://engine.api.prod.optechx-data.com/v1/Application/${APP_PUBLISHER}/${APP_NAME}".Replace(' ','%20')
         [System.String]$APP_CATEGORY = $InputPayload.Category.Replace(' ','_')  <# issue https://github.com/repasscloud/optechx.drivers/issues/3 #>
 
         <# Create a new applicationPackage #>
@@ -161,7 +161,7 @@ function Invoke-DoNotEditBelowThisLine {
                             Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
                         } catch {
                             Write-Output "ERROR: Unable to create new UID"
-                            Write-Error$_.Exception
+                            Write-Error $_.Exception
                         }
                     }
                 }
@@ -176,7 +176,7 @@ function Invoke-DoNotEditBelowThisLine {
         }
         catch {
             Write-Output "Error in main logic"
-            Write-Error -Messsage $_.Exception
+            Write-Error $_.Exception
         }
         #endregion Main Logic
     }
