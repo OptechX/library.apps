@@ -1,7 +1,7 @@
 name: developer-tools Only
 on:
   push:
-    branches: [ "developer-tools" ]
+    branches: [ "developer-tools","dev" ]
   workflow_dispatch:
 jobs:
   developer-tools:
