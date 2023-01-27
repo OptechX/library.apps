@@ -1,8 +1,13 @@
 <# Manifest Version Info #>
-$ManifestVersion='6.6.1'
+$ManifestVersion='6.6'
 $LastUpdate='2023-01-27'
 Write-Output "Manifest Version: ${ManifestVersion}"
 Write-Output "Last Updated: ${LastUpdate}"
+
+
+<# Create static new object #>
+$new_app = [applicationPayload]::new()
+$new_app.Category = $Env:applicationCategory
 
 
 <# Create static new object #>
@@ -74,29 +79,4 @@ else
 
 
 <# ============== DO NOT EDIT BELOW THIS LINE ============== #>
-if ($new_app.GetType().Name -like "applicationPayload")
-{
-    $x_app = [applicationPackage]::new()
-    $x_app.lastUpdate = ((Get-Date).ToString("yyyyMMdd"))
-    $x_app.applicationCategory = $Env:applicationCategory
-    $x_app.publisher = $new_app.Publisher
-    $x_app.Name = $new_app.Name
-    $x_app.version = $new_app.Version
-    $x_app.copyright = $new_app.Copyright
-    $x_app.licenseAcceptRequired = $new_app.LicenseAccept
-    $x_app.lcid = $new_app.Lcid
-    $x_app.cpuArch = $new_app.CpuArch
-    $x_app.homepage = $new_app.Homepage
-    $x_app.icon = $new_app.Icon
-    $x_app.docs = $new_app.Docs
-    $x_app.license = $new_app.License
-    $x_app.tags = $new_app.Tags
-    $x_app.summary = $new_app.Summary
-    $x_app.enabled = $new_app.Enabled
-
-    Invoke-DoNotEditBelowThisLine -InputPayload $x_app
-}
-else
-{
-    Invoke-DoNotEditBelowThisLine -InputPayload $new_app
-}
+Invoke-DoNotEditBelowThisLine -InputPayload $new_app

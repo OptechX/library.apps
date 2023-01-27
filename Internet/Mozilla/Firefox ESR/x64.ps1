@@ -6,7 +6,7 @@ Write-Output "Last Updated: ${LastUpdate}"
 
 
 <# Create static new object #>
-$new_app = [applicationPackage]::new()
+$new_app = [applicationPayload]::new()
 $new_app.Category = $Env:applicationCategory
 $new_app.Publisher = "Mozilla"
 $new_app.Name = "Firefox ESR"
