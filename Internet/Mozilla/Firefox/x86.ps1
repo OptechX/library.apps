@@ -1,5 +1,5 @@
 <# Manifest Version Info #>
-$ManifestVersion='6.6.1'
+$ManifestVersion='6.6'
 $LastUpdate='2023-01-27'
 Write-Output "Manifest Version: ${ManifestVersion}"
 Write-Output "Last Updated: ${LastUpdate}"
