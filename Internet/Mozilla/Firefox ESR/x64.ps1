@@ -94,11 +94,11 @@ if ($new_app.GetType().Name -like "applicationPayload")
     $x_app.summary = $new_app.Summary
     $x_app.enabled = $new_app.Enabled
 
-    $x_app
+    $x_app.GetType()
 
     Invoke-DoNotEditBelowThisLine -InputPayload $x_app
 }
-else
+if ($new_app.GetType().Name -like "applicationPackage")
 {
     Invoke-DoNotEditBelowThisLine -InputPayload $new_app
 }
