@@ -1,7 +1,7 @@
 name: entertainment Only
 on:
   push:
-    branches: [ "entertainment","dev" ]
+    branches: [ "entertainment" ]
   workflow_dispatch:
 jobs:
   entertainment:
