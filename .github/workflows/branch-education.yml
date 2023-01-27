@@ -1,7 +1,7 @@
 name: education Only
 on:
   push:
-    branches: [ "education","dev" ]
+    branches: [ "education" ]
   workflow_dispatch:
 jobs:
   education:

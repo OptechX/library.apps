@@ -1,7 +1,7 @@
 name: photo-design Only
 on:
   push:
-    branches: [ "photo-design","dev" ]
+    branches: [ "photo-design" ]
   workflow_dispatch:
 jobs:
   photo-design:
