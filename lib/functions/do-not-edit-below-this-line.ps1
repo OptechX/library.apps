@@ -26,6 +26,8 @@ function Invoke-DoNotEditBelowThisLine {
             [System.String]$summary = [string]::Empty
             [System.Boolean]$enabled = $true
         }
+
+        $Env:ENGINE_API_URI = "https://engine.api.prod.optechx-data.com"
     }
     
     process {
@@ -36,6 +38,8 @@ function Invoke-DoNotEditBelowThisLine {
         [System.String]$APP_UID = "$($APP_PUBLISHER.ToLower() -replace "[^a-zA-Z0-9]")::$($APP_NAME.ToLower() -replace "[^a-zA-Z0-9]")::$($APP_VERSION.ToLower() -replace "[^a-zA-Z0-9\.\-]")"
         [System.String]$API_RESPONSE_URI = "https://engine.api.prod.optechx-data.com/v1/Application/${APP_PUBLISHER}/${APP_NAME}".Replace(' ','%20')
         [System.String]$APP_CATEGORY = $InputPayload.Category.Replace(' ','_')  <# issue https://github.com/repasscloud/optechx.drivers/issues/3 #>
+        [System.String]$CPU_ARCH = $InputPayload.CpuArch
+        [System.String]$LCID = $InputPayload.Lcid
 
         <# Create a new applicationPackage #>
         $new_app_package = [applicationPackage]::new()
@@ -122,32 +126,38 @@ function Invoke-DoNotEditBelowThisLine {
                         if ($matched_data.lcid -notcontains $new_app_package.lcid)
                         {
                             Write-Output "Updating Lcid for ${APP_UID}"
-                            $interim_pkg.lcid = $matched_data.lcid += $new_app_package.lcid
+                            [System.String[]]$i_lcid
+                            $i_lcid = @($matched_data.lcid,$LCID)
+                            $interim_pkg.lcid = $i_lcid
                         }
                         else
                         {
-                            $interim_pkg.lcid = $matched_data.lcid
+                            $interim_pkg.lcid = @($matched_data.lcid)
                         }
 
                         # determine if CPUARCH requires to be updated
-                        if ($matched_data.cpuArch -notcontains $new_app_package.cpuArch)
+                        if ($matched_data.cpuArch -notcontains $CPU_ARCH)
                         {
                             Write-Output "Updating CpuArch for ${APP_UID}"
-                            Write-Output "Matched: $($matched_data.cpuArch)"
-                            Write-Output "New: $($new_app_package.cpuArch)"
-                            $interim_pkg.cpuArch = $matched_data.cpuArch += $new_app_package.cpuArch
-                            Write-Output "Interim: $($interim_pkg.cpuArch)"
+                            [System.String[]]$i_cpuArch
+                            $i_cpuArch = @($matched_data.cpuArch,$CPU_ARCH)
+                            $interim_pkg.cpuArch = $i_cpuArch
+                        }
+                        else
+                        {
+                            $interim_pkg.cpuArch = @($matched_data.cpuArch)
                         }
 
                         # convert package to JSON object
                         $json = $interim_pkg | ConvertTo-Json
                         
-
                         # update API endpoint with new data
                         try {
                             Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application/$($interim_pkg.id)" -Method Put -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
                         } catch {
                             Write-Output "match in matched_data error 2"
+                            "${Env:ENGINE_API_URI}/v1/Application/$($interim_pkg.id)"
+                            $json
                         }
                     }
 
