@@ -7,6 +7,7 @@
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/GetRedirectedUrl.ps1)
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/GetMSDotNetPackageDetails.ps1)
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/GetGHDotNetPackageDetails.ps1)
+. (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/do-not-edit-below-this-line.ps1)
 
 # set category Microsoft
 $Env:applicationCategory = "Microsoft"
