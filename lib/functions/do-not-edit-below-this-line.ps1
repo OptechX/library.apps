@@ -76,7 +76,7 @@ function Invoke-DoNotEditBelowThisLine {
                     }
                     catch {
                         Write-Output "MAIN LOGIC 404 ERROR"
-                        Write-Error -Message $_.Exception
+                        Write-Error $_.Exception
                         Write-Output "START DIAGNOSTIC DATA>>>"
                         Write-Output $new_app_package
                         Write-Output "<<<END DIAGNOSTIC DATA"
@@ -161,7 +161,7 @@ function Invoke-DoNotEditBelowThisLine {
                             Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
                         } catch {
                             Write-Output "ERROR: Unable to create new UID"
-                            Write-Error -Message $_.Exception
+                            Write-Error$_.Exception
                         }
                     }
                 }
