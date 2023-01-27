@@ -4,7 +4,24 @@ on:
     branches: [ "dev" ]
   workflow_dispatch:
 jobs:
+  pre-work:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Developer Tools
+        shell: pwsh
+        run: |
+          foreach ($i in (Invoke-RestMethod -Method GET -Uri "https://engine.api.prod.optechx-data.com/v1/Application" -Headers @{"accept"="application/json"}).id)
+          {
+              Invoke-Restmethod -Method Delete -Uri "https://engine.api.prod.optechx-data.com/v1/APplication/${i}" -Headers @{"accept"="*/*"}
+          }
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+
   developer-tools:
+    needs: [ "pre-work" ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
