@@ -4,53 +4,105 @@ on:
     branches: [ "dev" ]
   workflow_dispatch:
 jobs:
-  special:
+  developer-tools:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
       - name: Developer Tools
         shell: pwsh
         run: ./lib/tranches/developer-tools.ps1
         env:
           ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
 
+  education:
+    needs: [ "developer-tools" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Education
         shell: pwsh
         run: ./lib/tranches/education.ps1
         env:
           ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
 
+  entertainment:
+    needs: [ "developer-tools" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Entertainment
         shell: pwsh
         run: ./lib/tranches/entertainment.ps1
         env:
           ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
 
+  games:
+    needs: [ "entertainment" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Games
         shell: pwsh
         run: ./lib/tranches/games.ps1
         env:
           ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
 
+  internet:
+    needs: [ "entertainment" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Internet
         shell: pwsh
         run: ./lib/tranches/internet.ps1
         env:
           ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
 
+  lifestyle:
+    needs: [ "internet" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Lifestyle
         shell: pwsh
         run: ./lib/tranches/lifestyle.ps1
         env:
           ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
 
+  photo-design:
+    needs: [ "lifestyle" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Photo Design
         shell: pwsh
         run: ./lib/tranches/photo-design.ps1
         env:
           ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
 
-
+  microsoft:
+    needs: [ "photo-design" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Microsoft
+        shell: pwsh
+        run: ./lib/tranches/microsoft.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}

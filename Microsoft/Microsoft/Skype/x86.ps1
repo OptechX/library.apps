@@ -1,6 +1,6 @@
 <# Manifest Version Info #>
-$ManifestVersion='6.6-dotnet'
-$LastUpdate='2023-01-28'
+$ManifestVersion='6.6'
+$LastUpdate='2023-01-27'
 Write-Output "Manifest Version: ${ManifestVersion}"
 Write-Output "Last Updated: ${LastUpdate}"
 
@@ -8,18 +8,18 @@ Write-Output "Last Updated: ${LastUpdate}"
 <# Create static new object #>
 $new_app = [applicationPayload]::new()
 $new_app.Category = $Env:applicationCategory
-$new_app.Publisher = ".NET Foundation"
-$new_app.Name = ".NET Runtime"
+$new_app.Publisher = "Microsoft"
+$new_app.Name = "Skype"
 $new_app.Lcid = @("en-US")
 $new_app.CpuArch = @("x86")
-$new_app.Homepage = "https://dot.net/core"
-$new_app.Copyright = "Copyright (c) .NET Foundation and Contributors"
-$new_app.Icon = "https://github.com/OptechX/library.apps.images/raw/main/$($Env:applicationCategory)/dotnet/Core%20Runtime/icon.png"
+$new_app.Homepage = "http://www.skype.com"
+$new_app.Copyright = "Copyright (c) Microsoft $((Get-Date).ToString('yyyy'))"
+$new_app.Icon = "https://github.com/OptechX/library.apps.images/raw/main/$($Env:applicationCategory)/Microsoft/Skype/icon.png"
 $new_app.LicenseAccept = $false
-$new_app.Docs = "https://docs.microsoft.com/dotnet"
-$new_app.License = "https://github.com/dotnet/core/blob/main/LICENSE.TXT"
-$new_app.Tags = @("microsoft",".net","dotnet","dot-net","runtime","aspnet","asp.net","core")
-$new_app.Summary = "The .NET Runtime contains just the components needed to run a console app."
+$new_app.Docs = "https://www.skype.com/en/about/"
+$new_app.License = "https://www.microsoft.com/servicesagreement#14e_Skype"
+$new_app.Tags = @("skype","voip")
+$new_app.Summary = "Install Skype, add your friends as contacts, then call, video call and instant message with them for free."
 $new_app.RebootRequired = $false
 
 
@@ -53,16 +53,16 @@ if ($new_app.GithubUrl -ne [string]::Empty)
 }
 else
 {
-    $version_url = 'https://github.com/dotnet/runtime/releases/latest'
-    $x = Get-GHDotNetPackageDetails -VersionUrl $version_url `
-        -VersionPattern '7\.([\d{1,}\.]+)' `
-        -SubsFilename "dotnet-runtime-<REPLACE>-win-x86.exe" `
-        -AbsoluteUrl "https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-<REPLACE>-windows-x86-installer"
-    $new_app.Version = $x[0]
-    $new_app.Filename = $x[1]
-    $new_app.AbsoluteUri = $x[2]
-    $new_app.Executable = 'exe'
-    $new_app.InstallArgs = '/passive /norestart'
+    $version_url = 'https://go.skype.com/msi-download'
+    $download_page = ([System.Net.WebRequest]::CreateDefault($version_url)).GetResponse()
+
+    $new_app.Filename = Split-Path -Path $download_page.ResponseUri.OriginalString -Leaf
+    $new_app.Version = Split-Path -Path $download_page.ResponseUri.OriginalString -Leaf | 
+        Select-String -Pattern '\d{1,}.*\d{1,}' |
+        Select-Object -ExpandProperty Matches -First 1 |
+        Select-Object -ExpandProperty Value
+    $new_app.AbsoluteUri = $download_page.ResponseUri.OriginalString
+    $new_app.Executable = 'msi'
 }
 
 
