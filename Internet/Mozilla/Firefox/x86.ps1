@@ -1,5 +1,5 @@
 <# Manifest Version Info #>
-$ManifestVersion='6.6'
+$ManifestVersion='6.6.1'
 $LastUpdate='2023-01-27'
 Write-Output "Manifest Version: ${ManifestVersion}"
 Write-Output "Last Updated: ${LastUpdate}"
@@ -8,24 +8,20 @@ Write-Output "Last Updated: ${LastUpdate}"
 <# Create static new object #>
 $new_app = [applicationPayload]::new()
 $new_app.Category = $Env:applicationCategory
-
-
-<# Create static new object #>
-$new_app = [applicationPayload]::new()
-$new_app.Category = $Env:applicationCategory
 $new_app.Publisher = "Mozilla"
-$new_app.Name = "Firefox ESR"
+$new_app.Name = "Firefox"
 $new_app.Lcid = @("en-US")
 $new_app.CpuArch = @("x86")
 $new_app.Homepage = "https://www.mozilla.org/en-US/firefox/new/"
 $new_app.Copyright = "Copyright (c) 1998-$((Get-Date).ToString('yyyy')) Mozilla Foundation and its contributors"
-$new_app.Icon = "https://github.com/OptechX/library.apps.images/raw/main/$($Env:applicationCategory)/Mozilla/Firefox%20ESR/icon.svg"
+$new_app.Icon = "https://github.com/OptechX/library.apps.images/raw/main/$($Env:applicationCategory)/Mozilla/Firefox/icon.svg"
 $new_app.LicenseAccept = $false
 $new_app.Docs = "https://developer.mozilla.org/en-US/Firefox"
 $new_app.License = "https://www.mozilla.org/en-US/MPL/2.0/"
-$new_app.Tags = @("browser","mozilla","firefox","extended","support","release","esr")
-$new_app.Summary = "Extended Support Release of Mozilla Firefox."
+$new_app.Tags = @("browser","mozilla","firefox")
+$new_app.Summary = "Everyone deserves access to the internet - your language should never be a barrier."
 $new_app.RebootRequired = $false
+
 
 
 <# Get icon.png if not already obtained #>
@@ -60,23 +56,48 @@ else
 {
     $version_url = 'https://www.mozilla.org/en-US/firefox/all/'
     $download_page = Invoke-WebRequest -UseBasicParsing -Uri $version_url
-    $rgx = "download.mozilla.*product=firefox-esr-msi.*(&amp;|&)os=win(&amp;|&)lang=en-US"
+    $rgx = "download.mozilla.*product=firefox-msi.*(&amp;|&)os=win(&amp;|&)lang=en-US"
     $url = $download_page.links | 
         Where-Object -FilterScript { $_.href -match $rgx } | 
         Where-Object -FilterScript { $_.href -NotMatch 'stub|next' } | 
         Select-Object -First 1 -Expand href
     $response = [System.Net.Http.HttpClient]::new().GetAsync($url)
     $new_app.Version = $response.Result.RequestMessage.RequestUri.OriginalString | 
-        Select-String -Pattern 'releases\/\d{3}\.([0-9a-zA-Z\.]+)' | 
-        Select-Object -ExpandProperty Matches -First 1 |
-        Select-String -Pattern '\d{3}\.([0-9a-zA-Z\.]+)' |
-        Select-Object -ExpandProperty Matches -First 1 |
+        Select-String -Pattern 'releases\/\d{3}\.\d{1,3}\.\d{0,3}' | 
+        Select-Object -ExpandProperty Matches -First 1 | 
+        Select-String -Pattern '\d{3}\.\d{1,3}\.\d{0,3}' | 
+        Select-Object -ExpandProperty Matches -First 1 | 
         Select-Object -ExpandProperty Value
-    # $new_app.Filename = (Split-Path -Path $response.Result.RequestMessage.RequestUri.OriginalString -Leaf).Replace('%20',' ')
-    # $new_app.AbsoluteUri = $response.Result.RequestMessage.RequestUri.OriginalString
-    # $new_app.Executable = 'msi'
+    $new_app.Filename = (Split-Path -Path $response.Result.RequestMessage.RequestUri.OriginalString -Leaf).Replace('%20',' ')
+    $new_app.AbsoluteUri = $response.Result.RequestMessage.RequestUri.OriginalString
+    $new_app.Executable = 'msi'
 }
 
 
 <# ============== DO NOT EDIT BELOW THIS LINE ============== #>
-Invoke-DoNotEditBelowThisLine -InputPayload $new_app
+if ($new_app.GetType().Name -like "applicationPayload")
+{
+    $x_app = [applicationPackage]::new()
+    $x_app.lastUpdate = ((Get-Date).ToString("yyyyMMdd"))
+    $x_app.applicationCategory = $Env:applicationCategory
+    $x_app.publisher = $new_app.Publisher
+    $x_app.Name = $new_app.Name
+    $x_app.version = $new_app.Version
+    $x_app.copyright = $new_app.Copyright
+    $x_app.licenseAcceptRequired = $new_app.LicenseAccept
+    $x_app.lcid = $new_app.Lcid
+    $x_app.cpuArch = $new_app.CpuArch
+    $x_app.homepage = $new_app.Homepage
+    $x_app.icon = $new_app.Icon
+    $x_app.docs = $new_app.Docs
+    $x_app.license = $new_app.License
+    $x_app.tags = $new_app.Tags
+    $x_app.summary = $new_app.Summary
+    $x_app.enabled = $new_app.Enabled
+
+    Invoke-DoNotEditBelowThisLine -InputPayload $x_app
+}
+else
+{
+    Invoke-DoNotEditBelowThisLine -InputPayload $new_app
+}
