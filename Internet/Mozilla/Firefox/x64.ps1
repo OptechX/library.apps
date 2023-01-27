@@ -68,7 +68,7 @@ else
         Select-Object -ExpandProperty Value |
         Select-String -Pattern '\/([^\/]*)\/' |
         Select-Object -ExpandProperty Matches -First 1 | 
-        Select-Object -ExpandProperty Value).Replace('/','')
+        Select-Object -ExpandProperty Value).Replace('/','').ToString()
     $new_app.Filename = (Split-Path -Path $response.Result.RequestMessage.RequestUri.OriginalString -Leaf).Replace('%20',' ')
     $new_app.AbsoluteUri = ($response.Result.RequestMessage.RequestUri.OriginalString).Replace('win32','win64')
     $new_app.Executable = 'msi'
@@ -76,5 +76,5 @@ else
 
 
 <# ============== DO NOT EDIT BELOW THIS LINE ============== #>
-$new_app
-Invoke-DoNotEditBelowThisLine -InputPayload $new_app
+return $new_app
+#Invoke-DoNotEditBelowThisLine -InputPayload $new_app

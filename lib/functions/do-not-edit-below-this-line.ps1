@@ -36,7 +36,7 @@ function Invoke-DoNotEditBelowThisLine {
         [System.String]$APP_NAME = $InputPayload.Name
         [System.String]$APP_VERSION = $InputPayload.Version
         [System.String]$APP_UID = "$($APP_PUBLISHER.ToLower() -replace "[^a-zA-Z0-9]")::$($APP_NAME.ToLower() -replace "[^a-zA-Z0-9]")::$($APP_VERSION.ToLower() -replace "[^a-zA-Z0-9\.\-]")"
-        [System.String]$API_RESPONSE_URI = "https://engine.api.prod.optechx-data.com/v1/Application/${APP_PUBLISHER}/${APP_NAME}".Replace(' ','%20')
+        [System.String]$API_RESPONSE_URI = "https://engine.api.prod.optechx-data.com/v1/Application/uid/${APP_UID}"
         [System.String]$APP_CATEGORY = $InputPayload.Category.Replace(' ','_')  <# issue https://github.com/repasscloud/optechx.drivers/issues/3 #>
         [System.String]$CPU_ARCH = $InputPayload.CpuArch
         [System.String]$LCID = $InputPayload.Lcid
@@ -64,7 +64,7 @@ function Invoke-DoNotEditBelowThisLine {
 
         #region Main Logic
         try {
-            $api_response = Invoke-WebRequest -Uri $API_RESPONSE_URI -Method Get -UseBasicParsing -SkipHttpErrorCheck
+            $api_response = Invoke-WebRequest -Uri $API_RESPONSE_URI -Method Get -UseBasicParsing -SkipHttpErrorCheck -ErrorAction Stop
             <# if the $api_response is unable to communicate with the API endpoint, this is a main logic error, and will
             break down to to the catch statement and report back to the CI/CD this has occured, else the value will be stored for
             updating teh API endpoint with additional/new data #>
