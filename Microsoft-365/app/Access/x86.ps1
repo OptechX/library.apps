@@ -1,9 +1,8 @@
 <# Manifest Version Info #>
-$ManifestVersion='6.5.1-m365-app'
-$LastUpdate='2022-12-11'
+$ManifestVersion='6.6-m365-app'
+$LastUpdate='2023-01-28'
 Write-Output "Manifest Version: ${ManifestVersion}"
 Write-Output "Last Updated: ${LastUpdate}"
-
 
 <# Microsoft 365 Values #>
 $m365_app = "Access"

@@ -123,3 +123,15 @@ jobs:
         run: ./lib/tranches/microsoft.ps1
         env:
           ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+
+  microsoft-365:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Microsoft 365
+        shell: pwsh
+        run: ./lib/tranches/microsoft-365.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
