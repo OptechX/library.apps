@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Developer Tools
+      - name: Pre-Work
         shell: pwsh
         run: |
           foreach ($i in (Invoke-RestMethod -Method GET -Uri "https://engine.api.prod.optechx-data.com/v1/Application" -Headers @{"accept"="application/json"}).id)
@@ -133,5 +133,44 @@ jobs:
       - name: Microsoft 365
         shell: pwsh
         run: ./lib/tranches/microsoft-365.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+  
+  security:
+    needs: [ "games","internet" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Security
+        shell: pwsh
+        run: ./lib/tranches/security.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+
+  utility:
+    needs: [ "security" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Security
+        shell: pwsh
+        run: ./lib/tranches/utility.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+
+  productivity:
+    needs: [ "microsoft-365" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Security
+        shell: pwsh
+        run: ./lib/tranches/productivity.ps1
         env:
           ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
