@@ -125,6 +125,7 @@ jobs:
           ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
 
   microsoft-365:
+    needs: [ "pre-work" ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
