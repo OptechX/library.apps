@@ -30,5 +30,22 @@ $new_app.Summary = "Create your own database apps easily in formats that serve y
 $new_app.RebootRequired = $false
 
 
+<# Get app data #>
+$json_uri = "${m365_project_base}/config/config.json"
+$version_url = Invoke-WebRequest -Uri $json_uri -UseBasicParsing | 
+    ConvertFrom-Json | 
+    Select-Object -ExpandProperty $m365_channel | 
+    Select-Object -ExpandProperty VersionUri
+$version_info = Invoke-WebRequest -UseBasicParsing -Uri $version_url | 
+    Select-Object -ExpandProperty Content | 
+    Select-String -Pattern 'Version\s\d{1,}\s\(.*\)' | 
+    Select-Object -ExpandProperty Matches -First 1 | 
+    Select-Object -ExpandProperty Value
+$new_app.Version = $version_info.Replace('Version ','').Replace(' (','.').Replace('Build ','').Replace(')','')
+$new_app.Filename = "${m365_app_lower}.ps1"
+$new_app.AbsoluteUri = "${m365_project_base}/app/m365-app-${m365_app_lower}.ps1"
+$new_app.Executable = 'script'
+
+
 <# ============== DO NOT EDIT BELOW THIS LINE ============== #>
 Invoke-DoNotEditBelowThisLine -InputPayload $new_app
