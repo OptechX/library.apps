@@ -14,7 +14,7 @@ $Env:applicationCategoryMappingPath = "Microsoft-365"
 
 # set category Microsoft
 $Env:applicationCategory = "Microsoft"
-$ps1_files = Get-ChildItem -Path $Env:applicationCategoryMappingPath\app\Access -Recurse -Filter "*.ps1"
+$ps1_files = Get-ChildItem -Path $Env:applicationCategoryMappingPath\app -Recurse -Filter "*.ps1" | Where-Object {$_.Name -in "x86.ps1","x64.ps1"}
 Write-Output "Matched $($ps1_files.Length) manifests"
 foreach ($ps1_file in $ps1_files)
 {
