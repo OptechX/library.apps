@@ -33,4 +33,7 @@ if (-not(Test-Path -Path $o365_config_xml))
 
 
 <# Remove the app to ignore from Configuration.xml file #>
-(Get-Content -Path $o365_config_xml | Select-String -Pattern $regex -NotMatch) | Set-Content -Path $o365_config_xml
+if ($IsWindows)
+{
+    (Get-Content -Path $o365_config_xml | Select-String -Pattern $regex -NotMatch) | Set-Content -Path $o365_config_xml
+}
