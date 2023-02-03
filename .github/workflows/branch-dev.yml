@@ -175,3 +175,38 @@ jobs:
         run: ./lib/tranches/productivity.ps1
         env:
           ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+
+  auto-pr:
+    needs:
+      - microsoft
+      - utility
+      - productivity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: create pull request
+        run: |
+          gh pr create -B main -H dev --title 'Auto pr dev into main' --body 'Automatically created by gh-actions.' --assignee @me --label 'auto-pr'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_OPTECHX }}
+
+  triage:
+    needs: [ "auto-pr" ]
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/labeler@v4
+      with:
+        repo-token: "${{ secrets.GH_TOKEN_OPTECHX }}"
+  
+  auto-merge:
+    needs: [ "triage" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: merge pull request
+        run: gh pr merge --merge
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_OPTECHX }}
