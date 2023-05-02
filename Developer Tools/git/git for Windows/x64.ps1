@@ -87,6 +87,8 @@ $app_publisher = $new_app.Publisher
 $app_name = $new_app.Name
 $new_app.UID = $new_pkg.uid
 
+$new_pkg
+
 try {
     $matched_data = Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application/${app_publisher}/${app_name}" -Method Get -UseBasicParsing -Headers @{accept="text/plain"} -ErrorAction Stop
     switch($matched_data.Length)
@@ -98,7 +100,7 @@ try {
                 Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
             }
             catch {
-                Write-Output "unable to post new data, pre-updates"
+                Write-Output "unable to post new data, pre-updates (type 1)"
             }
         }
         1 {
@@ -195,7 +197,7 @@ catch {
                 Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
             }
             catch {
-                Write-Output "Unable to post new data, pre-updates (type 2)"
+                Write-Output "Unable to post new data, pre-updates (type 3)"
             }
         }
         Default {
