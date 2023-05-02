@@ -15,10 +15,10 @@ jobs:
         run: |
           foreach ($i in (Invoke-RestMethod -Method GET -Uri "https://engine.api.prod.optechx-data.com/v1/Application" -Headers @{"accept"="application/json"}).id)
           {
-              Invoke-Restmethod -Method Delete -Uri "https://engine.api.prod.optechx-data.com/v1/APplication/${i}" -Headers @{"accept"="*/*"}
+              Invoke-Restmethod -Method Delete -Uri "https://engine.api.prod.optechx-data.com/v1/Application/${i}" -Headers @{"accept"="*/*"}
           }
         env:
-          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
 
   developer-tools:
     needs: [ "pre-work" ]
@@ -31,7 +31,7 @@ jobs:
         shell: pwsh
         run: ./lib/tranches/developer-tools.ps1
         env:
-          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
 
   education:
     needs: [ "developer-tools" ]
@@ -44,7 +44,7 @@ jobs:
         shell: pwsh
         run: ./lib/tranches/education.ps1
         env:
-          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
 
   entertainment:
     needs: [ "developer-tools" ]
@@ -57,7 +57,7 @@ jobs:
         shell: pwsh
         run: ./lib/tranches/entertainment.ps1
         env:
-          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
 
   games:
     needs: [ "entertainment" ]
@@ -70,7 +70,7 @@ jobs:
         shell: pwsh
         run: ./lib/tranches/games.ps1
         env:
-          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
 
   internet:
     needs: [ "entertainment" ]
@@ -83,7 +83,7 @@ jobs:
         shell: pwsh
         run: ./lib/tranches/internet.ps1
         env:
-          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
 
   lifestyle:
     needs: [ "internet" ]
@@ -96,7 +96,7 @@ jobs:
         shell: pwsh
         run: ./lib/tranches/lifestyle.ps1
         env:
-          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
 
   photo-design:
     needs: [ "lifestyle", "education"]
@@ -109,7 +109,7 @@ jobs:
         shell: pwsh
         run: ./lib/tranches/photo-design.ps1
         env:
-          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
 
   microsoft:
     needs: [ "photo-design" ]
@@ -122,7 +122,7 @@ jobs:
         shell: pwsh
         run: ./lib/tranches/microsoft.ps1
         env:
-          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
 
   microsoft-365:
     needs: [ "pre-work" ]
@@ -135,7 +135,7 @@ jobs:
         shell: pwsh
         run: ./lib/tranches/microsoft-365.ps1
         env:
-          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
   
   security:
     needs: [ "games","internet" ]
@@ -148,7 +148,7 @@ jobs:
         shell: pwsh
         run: ./lib/tranches/security.ps1
         env:
-          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
 
   utility:
     needs: [ "security" ]
@@ -161,7 +161,7 @@ jobs:
         shell: pwsh
         run: ./lib/tranches/utility.ps1
         env:
-          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
 
   productivity:
     needs: [ "microsoft-365" ]
@@ -174,7 +174,7 @@ jobs:
         shell: pwsh
         run: ./lib/tranches/productivity.ps1
         env:
-          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
 
   auto-pr:
     needs:

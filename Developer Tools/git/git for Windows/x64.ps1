@@ -1,5 +1,5 @@
 <# Manifest Version Info #>
-$ManifestVersion='6.5'
+$ManifestVersion='6.5-Developer_Tools'
 $LastUpdate='2022-12-11'
 Write-Output "Manifest Version: ${ManifestVersion}"
 Write-Output "Last Updated: ${LastUpdate}"
@@ -7,7 +7,7 @@ Write-Output "Last Updated: ${LastUpdate}"
 
 <# Create static new object #>
 $new_app = [applicationPayload]::new()
-$new_app.Category = $Env:applicationCategory
+$new_app.Category = $Env:applicationCategory.Replace(' ','_')
 $new_app.Publisher = "Git"
 $new_app.Name = "Git for Windows"
 $new_app.Lcid = @("en-US")
@@ -98,7 +98,7 @@ try {
                 Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
             }
             catch {
-                Write-Output "unable to post new data, pre-updates"
+                Write-Output "unable to post new data, pre-updates (type 1)"
             }
         }
         1 {
@@ -195,7 +195,7 @@ catch {
                 Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
             }
             catch {
-                Write-Output "Unable to post new data, pre-updates"
+                Write-Output "Unable to post new data, pre-updates (type 3)"
             }
         }
         Default {

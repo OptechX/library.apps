@@ -1,5 +1,5 @@
 <# Manifest Version Info #>
-$ManifestVersion='6.5'
+$ManifestVersion='6.5-Developer_Tools'
 $LastUpdate='2022-12-11'
 Write-Output "Manifest Version: ${ManifestVersion}"
 Write-Output "Last Updated: ${LastUpdate}"
@@ -7,7 +7,7 @@ Write-Output "Last Updated: ${LastUpdate}"
 
 <# Create static new object #>
 $new_app = [applicationPayload]::new()
-$new_app.Category = $Env:applicationCategory
+$new_app.Category = $Env:applicationCategory.Replace(' ','_')
 $new_app.Publisher = "Git"
 $new_app.Name = "Git for Windows"
 $new_app.Lcid = @("en-US")
@@ -98,7 +98,7 @@ try {
                 Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
             }
             catch {
-                Write-Output "unable to post new data, pre-updates"
+                Write-Output "unable to post new data, pre-updates (type 1)"
             }
         }
         1 {
@@ -136,6 +136,9 @@ try {
                 if ($matched_data.cpuArch -notcontains $new_pkg.cpuArch)
                 {
                     Write-Output "CpuArch to be updated"
+                    $matched_data.cpuArch
+                    $new_cpu_data = @($matched_data.cpuArch,$new_pkg.cpuArch)
+                    $new_cpu_data
                     $int_pkg = [applicationPackage]::new()
                     $int_pkg.id = $matched_data.id
                     $int_pkg.uid = $matched_data.uid
@@ -180,7 +183,7 @@ try {
                 Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
             }
             catch {
-                Write-Output "unable to post new data following updates"
+                Write-Output "Unable to post new data, pre-updates (type 2)"
             }
         }
     }
@@ -195,7 +198,7 @@ catch {
                 Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
             }
             catch {
-                Write-Output "Unable to post new data, pre-updates"
+                Write-Output "Unable to post new data, pre-updates (type 3)"
             }
         }
         Default {

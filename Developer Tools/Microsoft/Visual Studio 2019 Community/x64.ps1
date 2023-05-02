@@ -7,7 +7,7 @@ Write-Output "Last Updated: ${LastUpdate}"
 
 <# Create static new object #>
 $new_app = [applicationPayload]::new()
-$new_app.Category = $Env:applicationCategory
+$new_app.Category = $Env:applicationCategory.Replace(' ','_')
 $new_app.Publisher = "Microsoft"
 $new_app.Name = "Visual Studio 2019 Community"
 $new_app.Lcid = @("en-US")
