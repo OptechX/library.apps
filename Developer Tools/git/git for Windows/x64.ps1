@@ -87,11 +87,6 @@ $app_publisher = $new_app.Publisher
 $app_name = $new_app.Name
 $new_app.UID = $new_pkg.uid
 
-$app_publisher
-$app_name
-$Env:ENGINE_API_URI = "https://engine.api.prod.optechx-data.com"
-"${Env:ENGINE_API_URI}/v1/Application/${app_publisher}/${app_name}"
-Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application/${app_publisher}/${app_name}" -Method Get -UseBasicParsing -Headers @{accept="text/plain"} -ErrorAction Stop
 try {
     $matched_data = Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application/${app_publisher}/${app_name}" -Method Get -UseBasicParsing -Headers @{accept="text/plain"} -ErrorAction Stop
     switch($matched_data.Length)
