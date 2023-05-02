@@ -98,7 +98,7 @@ try {
                 Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
             }
             catch {
-                Write-Output "unable to post new data, pre-updates"
+                Write-Output "unable to post new data, pre-updates (type 1)"
             }
         }
         1 {
@@ -180,7 +180,7 @@ try {
                 Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
             }
             catch {
-                Write-Output "unable to post new data following updates"
+                Write-Output "Unable to post new data, pre-updates (type 2)"
             }
         }
     }
@@ -195,7 +195,7 @@ catch {
                 Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
             }
             catch {
-                Write-Output "Unable to post new data, pre-updates"
+                Write-Output "Unable to post new data, pre-updates (type 3)"
             }
         }
         Default {
