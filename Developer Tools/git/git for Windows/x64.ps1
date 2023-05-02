@@ -89,6 +89,7 @@ $new_app.UID = $new_pkg.uid
 
 try {
     $matched_data = Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application/${app_publisher}/${app_name}" -Method Get -UseBasicParsing -Headers @{accept="text/plain"} -ErrorAction Stop
+    $matched_data
     switch($matched_data.Length)
     {
         0 {
