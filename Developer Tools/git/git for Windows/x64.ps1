@@ -1,5 +1,5 @@
 <# Manifest Version Info #>
-$ManifestVersion='6.5'
+$ManifestVersion='6.5-Developer_Tools'
 $LastUpdate='2022-12-11'
 Write-Output "Manifest Version: ${ManifestVersion}"
 Write-Output "Last Updated: ${LastUpdate}"
@@ -86,8 +86,6 @@ $new_pkg.summary = $new_app.Summary
 $app_publisher = $new_app.Publisher
 $app_name = $new_app.Name
 $new_app.UID = $new_pkg.uid
-
-$new_pkg
 
 try {
     $matched_data = Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application/${app_publisher}/${app_name}" -Method Get -UseBasicParsing -Headers @{accept="text/plain"} -ErrorAction Stop
@@ -192,7 +190,6 @@ catch {
     {
         "404" {
             $json = $new_pkg | ConvertTo-Json
-            $json
             try {
                 Write-Output "Importing UID: $($new_pkg.uid)"
                 Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
