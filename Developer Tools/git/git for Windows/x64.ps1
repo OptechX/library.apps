@@ -7,7 +7,7 @@ Write-Output "Last Updated: ${LastUpdate}"
 
 <# Create static new object #>
 $new_app = [applicationPayload]::new()
-$new_app.Category = $Env:applicationCategory
+$new_app.Category = $Env:applicationCategory.Replace(' ','_')
 $new_app.Publisher = "Git"
 $new_app.Name = "Git for Windows"
 $new_app.Lcid = @("en-US")
