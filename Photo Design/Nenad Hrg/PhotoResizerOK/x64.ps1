@@ -7,7 +7,7 @@ Write-Output "Last Updated: ${LastUpdate}"
 
 <# Create static new object #>
 $new_app = [applicationPayload]::new()
-$new_app.Category = $Env:applicationCategory
+$new_app.Category = $Env:applicationCategory.Replace(' ','_')
 $new_app.Publisher = "Nenad Hrg"
 $new_app.Name = "PhotoResizerOK"
 $new_app.Lcid = @("en-US")
