@@ -89,6 +89,7 @@ $new_app.UID = $new_pkg.uid
 
 $app_publisher
 $app_name
+$Env:ENGINE_API_URI = "https://engine.api.dev.optechx-data.com"
 $Env:ENGINE_API_URI | Out-File jiggy.text
 Get-Content jiggy.text
 $matched_data = Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application/${app_publisher}/${app_name}" -Method Get -UseBasicParsing -Headers @{accept="text/plain"} -ErrorAction Stop
