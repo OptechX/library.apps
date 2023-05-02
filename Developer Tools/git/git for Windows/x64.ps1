@@ -192,6 +192,7 @@ catch {
     {
         "404" {
             $json = $new_pkg | ConvertTo-Json
+            $json
             try {
                 Write-Output "Importing UID: $($new_pkg.uid)"
                 Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
