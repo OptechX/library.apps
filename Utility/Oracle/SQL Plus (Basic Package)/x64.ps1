@@ -8,18 +8,18 @@ Write-Output "Last Updated: ${LastUpdate}"
 <# Create static new object #>
 $new_app = [applicationPayload]::new()
 $new_app.Category = $Env:applicationCategory
-$new_app.Publisher = "Igor Pavlov"
-$new_app.Name = "7-Zip"
+$new_app.Publisher = "Oracle"
+$new_app.Name = "SQL Plus (Basic Package)"
 $new_app.Lcid = @("en-US")
 $new_app.CpuArch = @("x64")
-$new_app.Homepage = "http://www.7-zip.org/"
+$new_app.Homepage = "https://docs.oracle.com/cd/B19306_01/server.102/b14357/toc.htm"
 $new_app.Copyright = "7-Zip Copyright (C) 1999-$((Get-Date).ToString('yyyy')) Igor Pavlov."
-$new_app.Icon = "https://github.com/OptechX/library.apps.images/raw/main/$($Env:applicationCategory)/Igor%20Pavlov/7Zip/icon.svg"
+$new_app.Icon = "https://github.com/OptechX/library.apps.images/raw/main/$($Env:applicationCategory)/Oracle/SQL%20Plus%20%28Basic%20Package%29/icon.png"
 $new_app.LicenseAccept = $false
-$new_app.Docs = "http://www.7-zip.org/faq.html"
-$new_app.License = "http://www.7-zip.org/license.txt"
-$new_app.Tags = @("7zip","7-zip","zip","archive","archiver","winrar","rar","7z","7za","pzip")
-$new_app.Summary = "7-Zip is a file archiver with a high compression ratio"
+$new_app.Docs = "https://docs.oracle.com/cd/B19306_01/server.102/b14357/toc.htm"
+$new_app.License = "https://www.oracle.com/downloads/licenses/standard-license.html"
+$new_app.Tags = @("oracle","sql","sqlplus","plus","db","dbsql","sql-plus")
+$new_app.Summary = "SQL*Plus is an interactive and batch query tool that is installed with every Oracle Database Server or Client installation"
 $new_app.RebootRequired = $false
 
 
@@ -53,22 +53,18 @@ if ($new_app.GithubUrl -ne [string]::Empty)
 }
 else
 {
-    $version_url = 'http://www.7-zip.org/download.html'
+    $version_url = 'https://www.oracle.com/au/database/technologies/instant-client/winx64-64-downloads.html'
     $download_page = Invoke-WebRequest -UseBasicParsing -Uri $version_url -DisableKeepAlive
-    $new_app.Version = $download_page.Content | 
-        Select-String -Pattern 'Download 7-Zip.\d{1,2}\.\d{1,2}' | 
+    $new_app.Version = ($download_page.Content | 
+        Select-String -Pattern 'Version \d{1,}.*' | 
         Select-Object -ExpandProperty Matches -First 1 | 
-        Select-String -Pattern '\d{1,2}\.\d{1,2}' | 
-        Select-Object -ExpandProperty Matches -First 1 |
-        Select-Object -ExpandProperty Value
-    $download_page.Links | Select-Object href | Where-Object -FilterScript {$_ -match "$($new_app.Version.Replace('.',''))-x64.msi"}
+        Select-Object -ExpandProperty Value).Replace('</h4>','').Replace('Version ','')
+    ($download_page.Links | Select-Object href | Where-Object -FilterScript {$_ -match "instantclient-basic-windows.x64-$($new_app.Version)dbru.zip"}).href
     $new_app.Filename = Split-Path -Path ($download_page.Links | 
         Select-Object href | 
-        Where-Object -FilterScript {$_ -match "$($new_app.Version.Replace('.',''))-x64.msi"}).href -Leaf
-    $new_app.AbsoluteUri = "https://7-zip.org/$(($download_page.Links | 
-        Select-Object href | 
-        Where-Object -FilterScript {$_ -match "$($new_app.Version.Replace('.',''))-x64.msi"}).href)"
-    $new_app.Executable = 'msi'
+        Where-Object -FilterScript {$_ -match "instantclient-basic-windows.x64-$($new_app.Version)dbru.zip"}).href -Leaf
+    $new_app.AbsoluteUri = "https:" + (($download_page.Links | Select-Object href | Where-Object -FilterScript {$_ -match "instantclient-basic-windows.x64-$($new_app.Version)dbru.zip"}).href).Replace(' ','')
+    $new_app.Executable = 'zip'
 }
 
 
