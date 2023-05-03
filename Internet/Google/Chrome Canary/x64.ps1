@@ -8,7 +8,7 @@ Write-Output "Last Updated: ${LastUpdate}"
 <# Create static new object #>
 $new_app = [applicationPayload]::new()
 $new_app.Category = $Env:applicationCategory
-$new_app.Publisher = "Google Inc."
+$new_app.Publisher = "Google"
 $new_app.Name = "Chrome Dev"
 $new_app.Lcid = @("en-US")
 $new_app.CpuArch = @("x64")
