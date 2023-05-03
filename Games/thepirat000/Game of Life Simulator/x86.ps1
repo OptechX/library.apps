@@ -13,7 +13,7 @@ $new_app.Name = "Game of Life Simulator"
 $new_app.Lcid = @("en-US")
 $new_app.CpuArch = @("x86")
 $new_app.Homepage = "https://github.com/thepirat000/gols"
-$new_app.Copyright = "Copyright (C)2021 Don Ho"
+$new_app.Copyright = "Copyright (c) 2021 Don Ho"
 $new_app.Icon = "https://github.com/OptechX/library.apps.images/raw/main/$($Env:applicationCategory)/thepirat000/Game%20of%20Life%20Simulator/icon.png"
 $new_app.LicenseAccept = $false
 $new_app.Docs = "https://raw.githubusercontent.com/thepirat000/gols/v1.0.0.1/README.md"
@@ -23,6 +23,7 @@ $new_app.Summary = "Conway's Game of Life Simulator"
 $new_app.RebootRequired = $false
 $new_app.GithubUrl = "https://github.com/thepirat000/gols/releases/latest"
 $new_app.GithubFilename = "setup.exe"
+$new_app.BannerIcon = "https://github.com/OptechX/library.apps.images/raw/main/Games/thepirat000/Game%20of%20Life%20Simulator/icon_scaled.png"
 
 
 <# Get icon.png if not already obtained #>

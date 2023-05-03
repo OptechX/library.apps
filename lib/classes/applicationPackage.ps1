@@ -23,4 +23,5 @@ class applicationPackage {
     [System.String[]]$tags = @()
     [System.String]$summary = [string]::Empty
     [System.Boolean]$enabled = $true
+    [System.String]$bannerIcon = [string]::Empty
 }

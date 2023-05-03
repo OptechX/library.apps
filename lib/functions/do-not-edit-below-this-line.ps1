@@ -25,6 +25,7 @@ function Invoke-DoNotEditBelowThisLine {
             [System.String[]]$tags = @()
             [System.String]$summary = [string]::Empty
             [System.Boolean]$enabled = $true
+            [System.String]$bannerIcon = [string]::Empty
         }
 
         $Env:ENGINE_API_URI = "https://engine.api.prod.optechx-data.com"
@@ -61,6 +62,7 @@ function Invoke-DoNotEditBelowThisLine {
         $new_app_package.license = $InputPayload.License
         $new_app_package.tags = $InputPayload.Tags
         $new_app_package.summary = $InputPayload.Summary
+        $new_app_package.bannerIcon = $InputPayload.BannerIcon
 
         #region Main Logic
         try {
@@ -121,6 +123,7 @@ function Invoke-DoNotEditBelowThisLine {
                         $interim_pkg.license = $InputPayload.License
                         $interim_pkg.tags = $InputPayload.Tags
                         $interim_pkg.summary = $InputPayload.Summary
+                        $interim_pkg.bannerIcon = $InputPayload.BannerIcon
 
                         # determine if LCID requires to be updated
                         if ($matched_data.lcid -notcontains $new_app_package.lcid)
