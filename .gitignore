@@ -13,6 +13,7 @@ wipe-apps.ps1
 *.sln.docstates
 test.ps1
 test/*
+.DS_Store
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
