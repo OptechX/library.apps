@@ -13,5 +13,10 @@ Write-Output "Matched $($ps1_files.Length) manifests"
 foreach ($ps1_file in $ps1_files)
 {
     Write-Output "Starting $($ps1_file.FullName)"
-    . $ps1_file.FullName
+    try {
+        . $ps1_file.FullName
+    }
+    catch {
+        
+    }
 }
