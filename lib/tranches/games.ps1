@@ -4,7 +4,9 @@
 
 # load functions
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/GetGithubReleaseDownload.ps1)
-. (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/do-not-edit-below-this-line.ps1)
+. (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/do-not-edit-below-this-line2.ps1)
+
+Write-Output (Split-Path -Path $PSScriptRoot -Parent)
 
 # set category Games
 $Env:applicationCategory = "Games".ToUpper()
