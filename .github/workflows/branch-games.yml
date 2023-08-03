@@ -22,7 +22,7 @@ jobs:
           git clone https://github.com/OptechX/library.apps.images.git
 
       - name: install tree
-        run: apt -y install tree
+        run: sudo apt -y install tree
 
       - name: Run powershell commands
         shell: pwsh
