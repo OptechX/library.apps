@@ -8,9 +8,9 @@
 
 # set category Games
 $Env:applicationCategory = "Games".ToUpper()
-$path = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath $Env:applicationCategory
-dir /home/runner/work/library.apps/
-$ps1_files = Get-ChildItem -Path $path -Recurse -Filter "*.ps1"
+sudo apt -y install tree
+tree
+$ps1_files = Get-ChildItem -Path $Env:applicationCategory -Recurse -Filter "*.ps1"
 Write-Output "Matched $($ps1_files.Length) manifests"
 foreach ($ps1_file in $ps1_files)
 {
