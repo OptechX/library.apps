@@ -1,6 +1,6 @@
 <# Manifest Version Info #>
-$ManifestVersion='6.6'
-$LastUpdate='2023-01-27'
+$ManifestVersion='6.7'
+$LastUpdate='2023-08-03'
 Write-Output "Manifest Version: ${ManifestVersion}"
 Write-Output "Last Updated: ${LastUpdate}"
 
@@ -56,26 +56,34 @@ else
     $version_url = 'https://github.com/microsoft/winget-pkgs/tree/master/manifests/g/Google/Chrome/Canary'
     $download_page = Invoke-WebRequest -Uri $version_url -UseBasicParsing -DisableKeepAlive
     $rgx = '^.*\d{1,}\.([\d{1,}]+).*'
-    $download_page = $download_page.Links | Where-Object -FilterScript {$_.href -match $rgx} | Sort-Object href -Descending | ForEach-Object {
-        [string]$version = $_.href -replace '(^.*\/)',''
-        $url = "https://github.com/microsoft/winget-pkgs/raw/master/manifests/g/Google/Chrome/Canary/${version}/Google.Chrome.Canary.installer.yaml"
-        try
-        {
-            $result = Invoke-WebRequest -Uri $url -UseBasicParsing -DisableKeepAlive -ErrorAction Stop
-            return $result
-        }
-        catch { }
-    } | Select-Object -First 1
-    $new_app.Version = $version
-    $download_url = $download_page.Content | 
-        Select-String -Pattern 'https\:\/\/.*x64.*exe' | 
-        Select-Object -ExpandProperty Matches -First 1 | 
-        Select-Object -ExpandProperty Value
-    $new_app.Filename = Split-Path -Path $download_url -Leaf
-    $new_app.AbsoluteUri = $download_url
-    $new_app.Executable = 'exe'
+    try {
+        $download_page = $download_page.Links | Where-Object -FilterScript {$_.href -match $rgx} | Sort-Object href -Descending | ForEach-Object {
+            [string]$version = $_.href -replace '(^.*\/)',''
+            $url = "https://github.com/microsoft/winget-pkgs/raw/master/manifests/g/Google/Chrome/Canary/${version}/Google.Chrome.Canary.installer.yaml"
+            try
+            {
+                $result = Invoke-WebRequest -Uri $url -UseBasicParsing -DisableKeepAlive -ErrorAction Stop
+                return $result
+            }
+            catch { }
+        } | Select-Object -First 1
+        $new_app.Version = $version
+        $download_url = $download_page.Content | 
+            Select-String -Pattern 'https\:\/\/.*x64.*exe' | 
+            Select-Object -ExpandProperty Matches -First 1 | 
+            Select-Object -ExpandProperty Value
+        $new_app.Filename = Split-Path -Path $download_url -Leaf
+        $new_app.AbsoluteUri = $download_url
+        $new_app.Executable = 'exe'
+        $seed = $true
+    }
+    catch {
+        $seed = $false
+    }
 }
 
-
 <# ============== DO NOT EDIT BELOW THIS LINE ============== #>
-Invoke-DoNotEditBelowThisLine -InputPayload $new_app
+if ($seed)
+{
+    Invoke-DoNotEditBelowThisLine -InputPayload $new_app
+}
