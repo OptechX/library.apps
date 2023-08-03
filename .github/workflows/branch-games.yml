@@ -27,9 +27,9 @@ jobs:
       - name: Run powershell commands
         shell: pwsh
         run: |
-          tree
           try { Copy-Item -Path 'Games' -Recurse -Destination ./library.apps.images/ -Force -Confirm:$false } catch { }
           Get-ChildItem -Path ./library.apps.images -Recurse -Filter "*.ps1" | ForEach-Object { Remove-Item -Path $_.FullName -Force -Confirm:$false }
+          tree
 
       - name: Create report file
         run: date +%Y%m%d%H%M%S > ./library.apps.images/report.txt
