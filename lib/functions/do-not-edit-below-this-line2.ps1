@@ -7,9 +7,8 @@ function Invoke-DoNotEditBelowThisLine {
     begin {
         class applicationPackage {
             [System.Int16]$id = 0
-            [System.Guid]$uuid = [System.Guid]::NewGuid()
             [System.String]$uid = [string]::Empty
-            [System.String]$lastUpdate = [string]::Emtpy
+            [System.DateTime]$lastUpdate
             [System.String]$applicationCategory = [string]::Empty
             [System.String]$publisher = [string]::Empty
             [System.String]$name = [string]::Empty
@@ -25,10 +24,10 @@ function Invoke-DoNotEditBelowThisLine {
             [System.String[]]$tags = @()
             [System.String]$summary = [string]::Empty
             [System.Boolean]$enabled = $true
-            [System.String]$bannerIcon = [string]::Empty
+            [AllowNull()][System.String]$bannerIcon
         }
 
-        $Env:ENGINE_API_URI = "https://definitely-firm-chamois.ngrok-free.app/"
+        $Env:ENGINE_API_URI = "https://definitely-firm-chamois.ngrok-free.app"
     }
     
     process {
@@ -39,7 +38,7 @@ function Invoke-DoNotEditBelowThisLine {
         #[System.String]$APP_UID = "$($APP_PUBLISHER.ToLower() -replace "[^a-zA-Z0-9]")::$($APP_NAME.ToLower() -replace "[^a-zA-Z0-9]")::$($APP_VERSION.ToLower() -replace "[^a-zA-Z0-9\.\-]")"
         [System.String]$APP_UID = "$($APP_PUBLISHER -replace "[^a-zA-Z0-9]")::$($APP_NAME -replace "[^a-zA-Z0-9]")"
         [System.String]$API_RESPONSE_URI = "https://definitely-firm-chamois.ngrok-free.app/api/Application/byuid/${APP_UID}"
-        [System.String]$APP_CATEGORY = $InputPayload.Category.Replace(' ','_')  <# issue https://github.com/repasscloud/optechx.drivers/issues/3 #>
+        [System.String]$APP_CATEGORY = $InputPayload.Category.Replace(' ','_').ToUpperInvariant()  <# issue https://github.com/repasscloud/optechx.drivers/issues/3 #>
         [System.String]$CPU_ARCH = $InputPayload.CpuArch
         [System.String]$LCID = $InputPayload.Lcid
 
@@ -48,7 +47,7 @@ function Invoke-DoNotEditBelowThisLine {
 
         <# Dissect components from InputPayload into the minimum framework #>
         $new_app_package.uid = $APP_UID
-        $new_app_package.lastUpdate = $((Get-Date).ToString("yyyyMMdd"))
+        $new_app_package.lastUpdate = Get-Date
         $new_app_package.applicationCategory = $APP_CATEGORY
         $new_app_package.publisher = $APP_PUBLISHER
         $new_app_package.name = $APP_NAME
@@ -70,7 +69,7 @@ function Invoke-DoNotEditBelowThisLine {
             $api_response = Invoke-WebRequest -Uri $API_RESPONSE_URI -Method Get -UseBasicParsing -SkipHttpErrorCheck -ErrorAction Stop
             <# if the $api_response is unable to communicate with the API endpoint, this is a main logic error, and will
             break down to to the catch statement and report back to the CI/CD this has occured, else the value will be stored for
-            updating teh API endpoint with additional/new data #>
+            updating the API endpoint with additional/new data #>
 
             switch ($api_response.StatusCode)
             {
@@ -79,7 +78,7 @@ function Invoke-DoNotEditBelowThisLine {
                     $json = $new_app_package | ConvertTo-Json
                     try {
                         Write-Output "Importing new UID: ${APP_UID}"
-                        #Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
+                        Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/api/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
                         $json
                     }
                     catch {
@@ -112,7 +111,7 @@ function Invoke-DoNotEditBelowThisLine {
                         $interim_pkg = [applicationPackage]::new()
                         $interim_pkg.id = $matched_data.id
                         $interim_pkg.uid = $APP_UID
-                        $interim_pkg.lastUpdate = $((Get-Date).ToString("yyyyMMdd"))
+                        $interim_pkg.lastUpdate = Get-Date
                         $interim_pkg.applicationCategory = $APP_CATEGORY
                         $interim_pkg.publisher = $InputPayload.Publisher
                         $interim_pkg.name = $InputPayload.Name
@@ -158,10 +157,10 @@ function Invoke-DoNotEditBelowThisLine {
                         
                         # update API endpoint with new data
                         try {
-                            #Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application/$($interim_pkg.id)" -Method Put -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
+                            Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/api/Application/$($interim_pkg.id)" -Method Put -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
                         } catch {
                             Write-Output "match in matched_data error 2"
-                            "${Env:ENGINE_API_URI}/v1/Application/$($interim_pkg.id)"
+                            "${Env:ENGINE_API_URI}/api/Application/$($interim_pkg.id)"
                             $json
                         }
                     }
@@ -170,17 +169,18 @@ function Invoke-DoNotEditBelowThisLine {
                     else {
                         Write-Output "Not found UID: ${APP_UID}"
                         Write-Output "Creating new application..."
+                        Write-Output "This should NOT happen!"
 
-                        # convert to json object for the else
-                        $json = $new_app_package | ConvertTo-Json
+                        # # convert to json object for the else
+                        # $json = $new_app_package | ConvertTo-Json
 
-                        try {
-                            Write-Output "Importing new UID: ${APP_UID}"
-                            Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
-                        } catch {
-                            Write-Output "ERROR: Unable to create new UID"
-                            Write-Error $_.Exception
-                        }
+                        # try {
+                        #     Write-Output "Importing new UID: ${APP_UID}"
+                        #     Invoke-RestMethod -Uri "${Env:ENGINE_API_URI}/v1/Application" -Method Post -UseBasicParsing -Body $json -ContentType "application/json" -ErrorAction Stop
+                        # } catch {
+                        #     Write-Output "ERROR: Unable to create new UID"
+                        #     Write-Error $_.Exception
+                        # }
                     }
                 }
 

@@ -1,13 +1,12 @@
 <#
-  Version: 2.0
-  Last Update: 2022-12-10
+  Version: 2.1
+  Last Update: 2023-08-03
 #>
 
 class applicationPackage {
     [System.Int16]$id = 0
-    [System.Guid]$uuid = [System.Guid]::NewGuid()
     [System.String]$uid = [string]::Empty
-    [System.String]$lastUpdate = [string]::Emtpy
+    [System.DateTime]$lastUpdate
     [System.String]$applicationCategory = [string]::Empty
     [System.String]$publisher = [string]::Empty
     [System.String]$name = [string]::Empty
@@ -23,5 +22,5 @@ class applicationPackage {
     [System.String[]]$tags = @()
     [System.String]$summary = [string]::Empty
     [System.Boolean]$enabled = $true
-    [System.String]$bannerIcon = [string]::Empty
+    [AllowNull()][System.String]$bannerIcon
 }
