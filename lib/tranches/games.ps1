@@ -9,7 +9,8 @@
 # set category Games
 $Env:applicationCategory = "Games".ToUpper()
 $path = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath $Env:applicationCategory
-Write-Output $path
+Write-Output "Show the directory"
+Get-ChildItem -Path $path -Recurse
 $ps1_files = Get-ChildItem -Path $path -Recurse -Filter "*.ps1"
 Write-Output "Matched $($ps1_files.Length) manifests"
 foreach ($ps1_file in $ps1_files)
