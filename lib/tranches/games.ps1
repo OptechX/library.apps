@@ -8,8 +8,7 @@
 
 # set category Games
 $Env:applicationCategory = "Games".ToUpper()
-sudo apt -y install tree
-tree
+find ./Games -name "*.ps1"
 $ps1_files = Get-ChildItem -Path $Env:applicationCategory -Recurse -Filter "*.ps1"
 Write-Output "Matched $($ps1_files.Length) manifests"
 foreach ($ps1_file in $ps1_files)
