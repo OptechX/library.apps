@@ -13,7 +13,7 @@ $new_app.Name = "Chrome"
 $new_app.Lcid = @("en-US")
 $new_app.CpuArch = @("x64")
 $new_app.Homepage = "https://www.google.com/chrome/browser/"
-$new_app.Copyright = "Copyright $((Get-Date).ToString('yyyy')) Google LLC. ALl rights reserved."
+$new_app.Copyright = "Copyright $((Get-Date).ToString('yyyy')) Google LLC. All rights reserved."
 $new_app.Icon = "https://github.com/OptechX/library.apps.images/raw/main/$($Env:applicationCategory)/Google/Chrome/icon.svg"
 $new_app.LicenseAccept = $false
 $new_app.Docs = "https://support.google.com/chrome/?hl=en&rd=3#topic=7439538"
