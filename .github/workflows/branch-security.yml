@@ -11,6 +11,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Get tools
+        shell: sh
+        run: |
+          chmod +x ./get-oxlaut.sh
+          ./get-oxlaut.sh
+        
       - name: Run powershell scripts
         shell: pwsh
         run: ./lib/tranches/security.ps1
