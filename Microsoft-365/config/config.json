@@ -1,0 +1,106 @@
+{
+    "Channels": [
+      "Current",
+      "Monthly-Enterprise",
+      "Semi-Annual-Enterprise"
+    ],
+    "Current": {
+      "VersionUri": "https://learn.microsoft.com/en-au/officeupdates/current-channel",
+      "XmlConfig": {
+        "Business": {
+          "x64": {
+            "All": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x64-Current-All.xml",
+            "Project": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x64-Current-Project.xml",
+            "Standard": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x64-Current-Standard.xml",
+            "Visio": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x64-Current-Visio.xml"
+          },
+          "x86": {
+            "All": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x86-Current-All.xml",
+            "Project": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x86-Current-Project.xml",
+            "Standard": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x86-Current-Standard.xml",
+            "Visio": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x86-Current-Visio.xml"
+          }
+        },
+        "Enterprise": {
+          "x64": {
+            "All": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x64-Current-All.xml",
+            "Project": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x64-Current-Project.xml",
+            "Standard": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x64-Current-Standard.xml",
+            "Visio": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x64-Current-Visio.xml"
+          },
+          "x86": {
+            "All": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x86-Current-All.xml",
+            "Project": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x86-Current-Project.xml",
+            "Standard": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x86-Current-Standard.xml",
+            "Visio": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x86-Current-Visio.xml"
+          }
+        }
+      }
+    },
+    "Monthly-Enterprise": {
+      "VersionUri": "https://learn.microsoft.com/en-au/officeupdates/monthly-enterprise-channel",
+      "XmlConfig": {
+        "Business": {
+          "x64": {
+            "All": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x64-MonthlyEnterprise-All.xml",
+            "Project": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x64-MonthlyEnterprise-Project.xml",
+            "Standard": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x64-MonthlyEnterprise-Standard.xml",
+            "Visio": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x64-MonthlyEnterprise-Visio.xml"
+          },
+          "x86": {
+            "All": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x86-MonthlyEnterprise-All.xml",
+            "Project": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x86-MonthlyEnterprise-Project.xml",
+            "Standard": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x86-MonthlyEnterprise-Standard.xml",
+            "Visio": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x86-MonthlyEnterprise-Visio.xml"
+          }
+        },
+        "Enterprise": {
+          "x64": {
+            "All": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x64-MonthlyEnterprise-All.xml",
+            "Project": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x64-MonthlyEnterprise-Project.xml",
+            "Standard": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x64-MonthlyEnterprise-Standard.xml",
+            "Visio": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x64-MonthlyEnterprise-Visio.xml"
+          },
+          "x86": {
+            "All": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x86-MonthlyEnterprise-All.xml",
+            "Project": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x86-MonthlyEnterprise-Project.xml",
+            "Standard": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x86-MonthlyEnterprise-Standard.xml",
+            "Visio": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x86-MonthlyEnterprise-Visio.xml"
+          }
+        }
+      }
+    },
+    "Semi-Annual-Enterprise": {
+      "VersionUri": "https://learn.microsoft.com/en-au/officeupdates/semi-annual-enterprise-channel",
+      "XmlConfig": {
+        "Business": {
+          "x64": {
+            "All": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x64-SemiAnnual-All.xml",
+            "Project": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x64-SemiAnnual-Project.xml",
+            "Standard": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x64-SemiAnnual-Standard.xml",
+            "Visio": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x64-SemiAnnual-Visio.xml"
+          },
+          "x86": {
+            "All": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x86-SemiAnnual-All.xml",
+            "Project": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x86-SemiAnnual-Project.xml",
+            "Standard": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x86-SemiAnnual-Standard.xml",
+            "Visio": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Business-x86-SemiAnnual-Visio.xml"
+          }
+        },
+        "Enterprise": {
+          "x64": {
+            "All": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x64-SemiAnnual-All.xml",
+            "Project": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x64-SemiAnnual-Project.xml",
+            "Standard": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x64-SemiAnnual-Standard.xml",
+            "Visio": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x64-SemiAnnual-Visio.xml"
+          },
+          "x86": {
+            "All": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x86-SemiAnnual-All.xml",
+            "Project": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x86-SemiAnnual-Project.xml",
+            "Standard": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x86-SemiAnnual-Standard.xml",
+            "Visio": "https://raw.githubusercontent.com/OptechX/library.apps/main/Microsoft-365/lib/Configuration-Enterprise-x86-SemiAnnual-Visio.xml"
+          }
+        }
+      }
+    }
+  }

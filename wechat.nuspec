@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>wechat</id>
+    <version>3.9.6.33</version>
+    <packageSourceUrl>https://github.com/facorread/wechat-chocolatey</packageSourceUrl>
+    <owners>Fabio A. Correa Duran</owners>
+    <title>WeChat</title>
+    <authors>Tencent Inc.</authors>
+    <projectUrl>https://www.wechat.com/</projectUrl>
+    <iconUrl>https://cdn.jsdelivr.net/gh/facorread/wechat-chocolatey@master/wechat.png</iconUrl>
+    <copyright>Copyright © 1998-2021 Tencent Inc. All Rights Reserved.</copyright>
+    <licenseUrl>https://www.wechat.com/en/service_terms.html</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <tags>admin messenger notSilent wechat</tags>
+    <summary>WeChat instant messaging tool</summary>
+    <dependencies>
+      <dependency id="autohotkey.portable" version="2.0.4" />
+    </dependencies>
+    <description>From https://play.google.com/store/apps/details?id=com.tencent.mm
+
+WeChat is more than a messaging and social media app - it is a lifestyle for over one billion users across the world. Chat and make calls with friends, read news and use local services in Official Accounts and Mini Programs, play fun games with friends, enjoy mobile payment features with WeChat Pay, and much more.
+
+Why do over one billion people use WeChat? Well...
+• MORE WAYS TO CHAT: Message friends using text, photo, voice, video, location sharing, and more. Create group chats with up to 500 members.
+• VOICE AND VIDEO CALLS: High-quality voice and video calls to anywhere in the world. Make group video calls with up to 9 people.
+• REAL-TIME LOCATION: Not good at explaining directions? Share your real-time location with the press of a button.
+• MOMENTS: Share your favorite moments. Post photos, videos, and more to your Moments stream.
+• TIME CAPSULE (NEW!): Share glimpses of your day. Record short videos to post in your Time Capsule before they disappear in 24 hours.
+• STICKER GALLERY: Browse thousands of fun, animated stickers to help express yourself in chats, including stickers with your favorite cartoon and movie characters.
+• CUSTOM STICKERS: Make chatting more unique with custom stickers and the new Selfie Stickers feature.
+• OFFICIAL ACCOUNTS: Tons of accounts to follow with original content and news for your reading pleasure.
+• MINI PROGRAMS: Countless third-party services all within the WeChat app that don’t require additional installation, saving you precious phone storage and time.
+• TOP STORIES: See the latest articles your friends are reading and discover all kinds of interesting content.
+• GAMES: Have fun and compete with friends in a huge selection of WeChat Mini Games and Tencent Games (*only available in certain regions).
+• WECHAT PAY: Enjoy the convenience of world-leading mobile payment features with WeChat Pay and Wallet (*only available in certain regions).
+• WECHAT OUT: Make calls to mobile phones and landlines around the globe at super low rates (*only available in certain regions).
+• LANGUAGE SUPPORT: Localized in 20 different languages and can translate friends’ messages and Moments posts.
+• BETTER PRIVACY: Giving you the highest level of control over your privacy, WeChat is the only messaging app to be certified by TRUSTe.
+• AND MUCH MORE: Exercise with friends on WeRun, scan QR codes, and much more.</description>
+    <releaseNotes>
+    Tencent does not publish release notes for WeChat for Windows.
+
+    Silent installs are out of the scope of Tencent's work. Beginning with wechat v3.9.5.81, silent installs will be impossible with the official installer. This is because the /S parameter is incorrectly handled by one of the
+    installation binaries, hanging the installation. Additionally, AutoHotKey scripts can only use mouse click events because keyboard events are ignored by WeChat. Please contact the maintainers with any information that can help restore silent installs.
+
+    The WeChat Installer may differ from location to location. If you experience problems installing this package, please try installing a different version. WeChat will then upgrade itself through its built-in updater. For the complete version history, visit https://community.chocolatey.org/packages/wechat/#versionhistory
+
+    If you experience problems upgrading WeChat through Chocolatey, please pin the installed package to suppress upgrades:
+
+    choco pin add -n wechat
+
+    WeChat will continue to upgrade itself through its built-in updater regardless of the pin. For more information, visit https://docs.chocolatey.org/en-us/choco/commands/pin
+
+    The WeChat installer has a version number that is different from that of WeChat itself. The Chocolatey package tries to conform to the WeChat version.
+    </releaseNotes>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>

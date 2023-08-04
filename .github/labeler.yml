@@ -1,0 +1,38 @@
+Microsoft:
+- Microsoft/**/*
+
+Security:
+- Security/**/*
+
+Developer Tools:
+- Developer Tools/**/*
+
+Education:
+- Education/**/*
+
+Entertainment:
+- Entertainment/**/*
+
+Games:
+- Games/**/*
+
+Internet:
+- Internet/**/*
+
+Lifestyle:
+- Lifestyle/**/*
+
+Photo Design:
+- Photo Design/**/*
+
+Productivity:
+- Productivity/**/*
+
+Utility:
+- Utility/**/*
+
+core-lib:
+- lib/**/*
+
+Microsoft-365:
+- Microsoft-365/**/*

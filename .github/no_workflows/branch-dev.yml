@@ -1,0 +1,212 @@
+name: dev Special Run
+on:
+  push:
+    branches: [ "dev" ]
+  workflow_dispatch:
+jobs:
+  pre-work:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Pre-Work
+        shell: pwsh
+        run: |
+          foreach ($i in (Invoke-RestMethod -Method GET -Uri "https://engine.api.prod.optechx-data.com/v1/Application" -Headers @{"accept"="application/json"}).id)
+          {
+              Invoke-Restmethod -Method Delete -Uri "https://engine.api.prod.optechx-data.com/v1/Application/${i}" -Headers @{"accept"="*/*"}
+          }
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
+
+  developer-tools:
+    needs: [ "pre-work" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Developer Tools
+        shell: pwsh
+        run: ./lib/tranches/developer-tools.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
+
+  education:
+    needs: [ "developer-tools" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Education
+        shell: pwsh
+        run: ./lib/tranches/education.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
+
+  entertainment:
+    needs: [ "developer-tools" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Entertainment
+        shell: pwsh
+        run: ./lib/tranches/entertainment.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
+
+  games:
+    needs: [ "entertainment" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Games
+        shell: pwsh
+        run: ./lib/tranches/games.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
+
+  internet:
+    needs: [ "entertainment" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Internet
+        shell: pwsh
+        run: ./lib/tranches/internet.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
+
+  lifestyle:
+    needs: [ "internet" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Lifestyle
+        shell: pwsh
+        run: ./lib/tranches/lifestyle.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
+
+  photo-design:
+    needs: [ "lifestyle", "education"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Photo Design
+        shell: pwsh
+        run: ./lib/tranches/photo-design.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
+
+  microsoft:
+    needs: [ "photo-design" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Microsoft
+        shell: pwsh
+        run: ./lib/tranches/microsoft.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
+
+  microsoft-365:
+    needs: [ "pre-work" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Microsoft 365
+        shell: pwsh
+        run: ./lib/tranches/microsoft-365.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
+  
+  security:
+    needs: [ "games","internet" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Security
+        shell: pwsh
+        run: ./lib/tranches/security.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
+
+  utility:
+    needs: [ "security" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Security
+        shell: pwsh
+        run: ./lib/tranches/utility.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
+
+  productivity:
+    needs: [ "microsoft-365" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Security
+        shell: pwsh
+        run: ./lib/tranches/productivity.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
+
+  auto-pr:
+    needs:
+      - microsoft
+      - utility
+      - productivity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: create pull request
+        run: |
+          gh pr create -B main -H dev --title 'Auto pr dev into main' --body 'Automatically created by gh-actions.' --assignee @me --label 'auto-pr'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_OPTECHX }}
+
+  triage:
+    needs: [ "auto-pr" ]
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/labeler@v4
+      with:
+        repo-token: "${{ secrets.GH_TOKEN_OPTECHX }}"
+  
+  auto-merge:
+    needs: [ "triage" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: merge pull request
+        run: gh pr merge --merge
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_OPTECHX }}

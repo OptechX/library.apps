@@ -1,0 +1,9 @@
+version: 1.0.{build}
+skip_tags: true
+image: Visual Studio 2019
+shallow_clone: true
+build_script:
+- ps: $PSVersionTable
+- pwsh: $PSVersionTable
+test_script:
+- pwsh: Write-Output "This is a test"
