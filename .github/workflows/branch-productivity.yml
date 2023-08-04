@@ -1,7 +1,7 @@
 name: productivity Only
 on:
   push:
-    branches: [ "productivity" ]
+    branches: [ "dev" ]
   workflow_dispatch:
 jobs:
   productivity:
@@ -11,11 +11,17 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Get tools
+        shell: sh
+        run: |
+          chmod +x ./get-oxlaut.sh
+          ./get-oxlaut.sh
+
       - name: Run powershell scripts
         shell: pwsh
         run: ./lib/tranches/productivity.ps1
         env:
-          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_PROD }}
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
 
       - name: Clone library.apps.images repo
         run: |
