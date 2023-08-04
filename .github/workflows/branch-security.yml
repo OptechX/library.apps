@@ -1,7 +1,7 @@
 name: security Only
 on:
   push:
-    branches: [ "security" ]
+    branches: [ "dev" ]
   workflow_dispatch:
 jobs:
   security:

@@ -1,7 +1,7 @@
 name: games Only
 on:
   push:
-    branches: [ "games" ]
+    branches: [ "dev" ]
   workflow_dispatch:
 jobs:
   games:
