@@ -1,7 +1,7 @@
 name: microsoft Only
 on:
   push:
-    branches: [ "microsoft" ]
+    branches: [ "dev" ]
   workflow_dispatch:
 jobs:
   microsoft:
@@ -11,6 +11,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Get tools
+        shell: sh
+        run: |
+          chmod +x ./get-oxlaut.sh
+          ./get-oxlaut.sh
+        
       - name: Run powershell scripts
         shell: pwsh
         run: ./lib/tranches/microsoft.ps1
@@ -25,7 +31,7 @@ jobs:
         shell: pwsh
         run: |
           try { Copy-Item -Path 'Microsoft' -Recurse -Destination ./library.apps.images/ -Force -Confirm:$false } catch { }
-          Get-ChildItem -Path ./library.apps.images -Recurse -Filter "x*.ps1" | ForEach-Object { Remove-Item -Path $_.FullName -Force -Confirm:$false }
+          Get-ChildItem -Path ./library.apps.images -Recurse -Filter "*.ps1" | ForEach-Object { Remove-Item -Path $_.FullName -Force -Confirm:$false }
 
       - name: Create report file
         run: date +%Y%m%d%H%M%S > ./library.apps.images/report.txt
@@ -54,16 +60,10 @@ jobs:
 
       - name: Run powershell commands
         shell: pwsh
-        run: |
-          try { Copy-Item -Path 'Internet' -Recurse -Destination ./library.apps.images/ -Force -Confirm:$false } catch { }
-          Get-ChildItem -Path ./library.apps.images -Recurse -Filter "*.ps1" | ForEach-Object { Remove-Item -Path $_.FullName -Force -Confirm:$false }
+        run: Get-ChildItem -Path ./library.apps.images -Recurse -Filter ".gitkeep" | ForEach-Object { Remove-Item -Path $_.FullName -Force -Confirm:$false }
 
       - name: Create report file
         run: date +%Y%m%d%H%M%S > ./library.apps.images/report.txt
-
-      - name: Run powershell commands
-        shell: pwsh
-        run: Get-ChildItem -Path ./library.apps.images -Recurse -Filter ".gitkeep" | ForEach-Object { Remove-Item -Path $_.FullName -Force -Confirm:$false }
 
       - name: Push updates to library.apps.images repo
         run: |
@@ -85,20 +85,9 @@ jobs:
         run: gh pr create -B dev -H 'microsoft' --title 'Auto pr microsoft into dev' --body 'Automatically created by gh-actions.'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN_OPTECHX }}
-
-  triage:
-    needs: [ "auto-pr" ]
-    permissions:
-      contents: read
-      pull-requests: write
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/labeler@v4
-      with:
-        repo-token: "${{ secrets.GH_TOKEN_OPTECHX }}"
   
   auto-merge:
-    needs: [ "auto-pr", "microsoft", "triage" ]
+    needs: [ "auto-pr", "microsoft" ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

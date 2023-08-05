@@ -1,0 +1,30 @@
+{
+  "id": 0,
+  "uid": "Google::Chrome",
+  "lastUpdate": "2023-08-05T09:13:19.50371+10:00",
+  "applicationCategory": "LIFESTYLE",
+  "publisher": "Google",
+  "name": "Chrome",
+  "version": "115.0.5790.171",
+  "copyright": "Copyright 2023 Google LLC. All rights reserved.",
+  "licenseAcceptRequired": false,
+  "lcid": [
+    "EN_US"
+  ],
+  "cpuArch": [
+    "x64"
+  ],
+  "homepage": "https://www.google.com/chrome/browser/",
+  "icon": "https://github.com/OptechX/library.apps.images/raw/main/Lifestyle/Google/Chrome/icon.svg",
+  "docs": "https://support.google.com/chrome/?hl=en&rd=3#topic=7439538",
+  "license": "https://www.google.it/intl/en/chrome/browser/privacy/eula_text.html",
+  "tags": [
+    "google",
+    "chrome",
+    "internet",
+    "browser"
+  ],
+  "summary": "Chrome is a fast, simple, and secure web browser, built for the modern web.",
+  "enabled": true,
+  "bannerIcon": null
+}
