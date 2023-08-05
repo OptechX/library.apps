@@ -12,8 +12,13 @@ foreach ($iVersion in $versionMajor)
         $versionList.Add($i)
     }
     catch {
-        $highestVersion = Get-HighestVersion -Versions $versionMajor.Name
-        $versionList2.Add($highestVersion)
+        try {
+            $highestVersion = Get-HighestVersion -Versions $versionMajor.Name
+            $versionList2.Add($highestVersion)
+        }
+        catch {
+            
+        }
     }
 }
 if ($versionList.Count -ge 1)
