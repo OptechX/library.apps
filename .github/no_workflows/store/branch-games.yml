@@ -1,0 +1,97 @@
+name: games Only
+on:
+  push:
+    branches: [ "dev" ]
+  workflow_dispatch:
+jobs:
+  games:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get tools
+        shell: sh
+        run: |
+          chmod +x ./get-oxlaut.sh
+          ./get-oxlaut.sh
+
+      - name: Run powershell scripts
+        shell: pwsh
+        run: ./lib/tranches/games.ps1
+        env:
+          ENGINE_API_URI: ${{ secrets.ENGINE_API_URI_DEV }}
+
+      - name: Clone library.apps.images repo
+        run: |
+          git clone https://github.com/OptechX/library.apps.images.git
+
+      - name: Run powershell commands
+        shell: pwsh
+        run: |
+          try { Copy-Item -Path 'Games' -Recurse -Destination ./library.apps.images/ -Force -Confirm:$false } catch { }
+          Get-ChildItem -Path ./library.apps.images -Recurse -Filter "*.ps1" | ForEach-Object { Remove-Item -Path $_.FullName -Force -Confirm:$false }
+
+      - name: Create report file
+        run: date +%Y%m%d%H%M%S > ./library.apps.images/report.txt
+
+      - name: Push updates to library.apps.images repo
+        run: |
+          updates=$(date +%Y%m%d%H%M%S)
+          git -C ./library.apps.images config user.name 'Auto Commit'
+          git -C ./library.apps.images config user.email 'auto-commit@users.noreply.github.com'
+          git -C ./library.apps.images remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN_OPTECHX }}@github.com/OptechX/library.apps.images
+          git -C ./library.apps.images add .
+          git -C ./library.apps.images commit -m "$updates"
+          git -C ./library.apps.images push
+
+  cleanup:
+    needs: [ "games" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Clone library.apps.images repo
+        run: |
+          git clone https://github.com/OptechX/library.apps.images.git
+
+      - name: Run powershell commands
+        shell: pwsh
+        run: Get-ChildItem -Path ./library.apps.images -Recurse -Filter ".gitkeep" | ForEach-Object { Remove-Item -Path $_.FullName -Force -Confirm:$false }
+
+      - name: Create report file
+        run: date +%Y%m%d%H%M%S > ./library.apps.images/report.txt
+
+      - name: Push updates to library.apps.images repo
+        run: |
+          updates=$(date +%Y%m%d%H%M%S)
+          git -C ./library.apps.images config user.name 'Auto Commit'
+          git -C ./library.apps.images config user.email 'auto-commit@users.noreply.github.com'
+          git -C ./library.apps.images remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN_OPTECHX }}@github.com/OptechX/library.apps.images
+          git -C ./library.apps.images add .
+          git -C ./library.apps.images commit -m "$updates"
+          git -C ./library.apps.images push
+          rm -rf ./library.apps.images
+
+  auto-pr:
+    needs: [ "games" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: create pull request
+        run: gh pr create -B dev -H 'games' --title 'Auto pr games into dev' --body 'Automatically created by gh-actions.'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_OPTECHX }}
+  
+  auto-merge:
+    needs: [ "auto-pr", "games" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: merge pull request
+        run: gh pr merge --squash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_OPTECHX }}

@@ -4,6 +4,7 @@
 
 # load functions
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/GetGithubReleaseDownload.ps1)
+. (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/GetGithubVersionFromTags.ps1)
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/do-not-edit-below-this-line.ps1)
 
 # set category Productivity
@@ -14,4 +15,12 @@ foreach ($ps1_file in $ps1_files)
 {
     Write-Output "Starting $($ps1_file.FullName)"
     . $ps1_file.FullName
+}
+
+# execute update
+$json_files = Get-ChildItem -Path $Env:applicationCategory -Recurse -Filter "*.json"
+foreach ($json_file in $json_files)
+{
+    Write-Output "Starting $($json_file.FullName)"
+    & ./bin/oxlaut --json "${json_file}"
 }
