@@ -1,8 +1,8 @@
 # copyright symbol
 $copyrightSymbol = [char]169
 
-# DotNet/AspNetCore
-$pRoot = "./winget-pkgs/manifests/m/Microsoft/DotNet/AspNetCore"
+# DotNet/HostingBundle
+$pRoot = "./winget-pkgs/manifests/m/Microsoft/DotNet/HostingBundle"
 $versionMajor = Get-ChildItem -Path $pRoot -Directory
 foreach ($thisVersion in $versionMajor)
 {
