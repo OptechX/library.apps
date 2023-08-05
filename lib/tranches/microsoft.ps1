@@ -3,7 +3,9 @@
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath classes/applicationPackage.ps1)
 
 # load functions
+. (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/GetHighestVersion.ps1)
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/NewWingetPkgJson.ps1)
+. (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/InvokeJsonBuilder.ps1)
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/GetGithubReleaseDownload.ps1)
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/GetGithubVersionFromTags.ps1)
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/do-not-edit-below-this-line.ps1)
@@ -16,7 +18,12 @@ $Env:applicationCategory = "Microsoft"
 
 # clone winget directory
 git clone https://github.com/microsoft/winget-pkgs.git
-Remove-Item -Path ./winget-pkgs/.git -Recurse -Force
+try {
+    Remove-Item -Path ./winget-pkgs/.git -Recurse -Force -ErrorAction SilentlyContinue
+}
+catch {
+    
+}
 
 # install PowerShell-Yaml module
 Install-Module -Name PowerShell-Yaml -Force

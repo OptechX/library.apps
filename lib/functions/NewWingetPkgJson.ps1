@@ -60,6 +60,7 @@ function New-WingetPkgJson {
             {
                 "MIT" { $new_pkg.license = "https://opensource.org/license/mit/" }
                 "Microsoft Software License" { $new_pkg.license = "https://www.microsoft.com/en-us/servicesagreement/" }
+                "GPLv2" { $new_pkg.license = "https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html#SEC1" }
                 Default { $new_pkg.license = "TBA" }
             }
         }
