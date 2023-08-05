@@ -3,6 +3,7 @@
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath classes/applicationPackage.ps1)
 
 # load functions
+. (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/GetHighestVersion.ps1)
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/NewWingetPkgJson.ps1)
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/GetGithubReleaseDownload.ps1)
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/GetGithubVersionFromTags.ps1)
@@ -17,7 +18,7 @@ $Env:applicationCategory = "Microsoft"
 # clone winget directory
 git clone https://github.com/microsoft/winget-pkgs.git
 try {
-    Remove-Item -Path ./winget-pkgs/.git -Recurse -Force
+    Remove-Item -Path ./winget-pkgs/.git -Recurse -Force -ErrorAction SilentlyContinue
 }
 catch {
     
