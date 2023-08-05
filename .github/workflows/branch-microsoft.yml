@@ -1,7 +1,7 @@
 name: microsoft Only
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "microsoft" ]
   workflow_dispatch:
 jobs:
   microsoft:
