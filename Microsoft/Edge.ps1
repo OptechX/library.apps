@@ -14,48 +14,51 @@ foreach ($iVersion in $versionMajor)
 
     }
 }
-$sortedVersions = $versionList | Sort-Object -Descending
-$highestVersion = $sortedVersions[0]
-$currentVersion = [string]$highestVersion
-
-# locale data
-$yamlPath = Get-ChildItem -Path $pRoot/$currentVersion -Filter "*locale.en-US.yaml" | Select-Object -ExpandProperty FullName
-$yamlContent = Get-Content -Path $yamlPath -Raw
-$yamlLocale = $yamlContent | ConvertFrom-Yaml
-
-# installer data
-$yamlPath = Get-ChildItem -Path $pRoot/$currentVersion -Filter "*.installer.yaml" | Select-Object -ExpandProperty FullName
-$yamlContent = Get-Content -Path $yamlPath -Raw
-$yamlInstaller = $yamlContent | ConvertFrom-Yaml
-
-# icon url test
-$iconUrl = "https://github.com/OptechX/library.apps.images/raw/main/$($env:applicationCategory)/$($yamlLocale.Publisher)/$($yamlLocale.PackageIdentifier)/icon.svg"
-try {
-    $response = Invoke-WebRequest -Uri $iconUrl -Method Head
-    if ($response.StatusCode -eq 200)
-    {
-        $iconUri = $iconUrl
-    }
-    else
-    {
+if ($versionList.Count -ge 1)
+{
+    $sortedVersions = $versionList | Sort-Object -Descending
+    $highestVersion = $sortedVersions[0]
+    $currentVersion = [string]$highestVersion
+    
+    # locale data
+    $yamlPath = Get-ChildItem -Path $pRoot/$currentVersion -Filter "*locale.en-US.yaml" | Select-Object -ExpandProperty FullName
+    $yamlContent = Get-Content -Path $yamlPath -Raw
+    $yamlLocale = $yamlContent | ConvertFrom-Yaml
+    
+    # installer data
+    $yamlPath = Get-ChildItem -Path $pRoot/$currentVersion -Filter "*.installer.yaml" | Select-Object -ExpandProperty FullName
+    $yamlContent = Get-Content -Path $yamlPath -Raw
+    $yamlInstaller = $yamlContent | ConvertFrom-Yaml
+    
+    # icon url test
+    $iconUrl = "https://github.com/OptechX/library.apps.images/raw/main/$($env:applicationCategory)/$($yamlLocale.Publisher)/$($yamlLocale.PackageIdentifier)/icon.svg"
+    try {
+        $response = Invoke-WebRequest -Uri $iconUrl -Method Head
+        if ($response.StatusCode -eq 200)
+        {
+            $iconUri = $iconUrl
+        }
+        else
+        {
+            $iconUri = ""
+        }
+    } 
+    catch {
         $iconUri = ""
     }
-} 
-catch {
-    $iconUri = ""
-}
-
-# build the json output
-if ($yamlInstaller.Installers)
-{
-    foreach ($arch in $yamlInstaller.Installers.Architecture)
+    
+    # build the json output
+    if ($yamlInstaller.Installers)
     {
-        if ($arch -eq "x86" -or $arch -eq "x64")
+        foreach ($arch in $yamlInstaller.Installers.Architecture)
         {
-            $arch
-            New-WingetPkgJson -YamlObj $yamlLocale -Category $env:applicationCategory -IconLink $iconUri -Arch $arch -OutDir $PSScriptRoot
+            if ($arch -eq "x86" -or $arch -eq "x64")
+            {
+                $arch
+                New-WingetPkgJson -YamlObj $yamlLocale -Category $env:applicationCategory -IconLink $iconUri -Arch $arch -OutDir $PSScriptRoot
+            }
         }
-    }
+    }    
 }
 
 # build version minor
