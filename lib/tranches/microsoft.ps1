@@ -5,6 +5,7 @@
 # load functions
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/GetHighestVersion.ps1)
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/NewWingetPkgJson.ps1)
+. (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/InvokeJsonBuilder.ps1)
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/GetGithubReleaseDownload.ps1)
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/GetGithubVersionFromTags.ps1)
 . (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath functions/do-not-edit-below-this-line.ps1)
