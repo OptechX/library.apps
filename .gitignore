@@ -15,6 +15,7 @@ test.ps1
 test/*
 .DS_Store
 bin/oxlaut
+winget-pkgs/*
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

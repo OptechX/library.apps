@@ -53,7 +53,7 @@ foreach ($thisVersion in $versionMajor)
                                 $new_pkg = [applicationPackage]::new()
                                 $new_pkg.uid = $yamlLocale.PackageIdentifier
                                 $new_pkg.lastUpdate = Get-Date
-                                $new_pkg.applicationCategory = 
+                                $new_pkg.applicationCategory = $env:applicationCategory.ToUpper()
                                 $new_pkg.publisher = $yamlLocale.Publisher
                                 $new_pkg.name = $yamlLocale.PackageName
                                 $new_pkg.version = $yamlLocale.PackageVersion
@@ -74,7 +74,7 @@ foreach ($thisVersion in $versionMajor)
                                 $new_pkg = [applicationPackage]::new()
                                 $new_pkg.uid = $yamlLocale.PackageIdentifier
                                 $new_pkg.lastUpdate = Get-Date
-                                $new_pkg.applicationCategory = 
+                                $new_pkg.applicationCategory = $env:applicationCategory.ToUpper()
                                 $new_pkg.publisher = $yamlLocale.Publisher
                                 $new_pkg.name = $yamlLocale.PackageName
                                 $new_pkg.version = $yamlLocale.PackageVersion

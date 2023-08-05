@@ -15,6 +15,7 @@ $Env:applicationCategory = "Microsoft"
 
 # clone winget directory
 git clone https://github.com/microsoft/winget-pkgs.git
+Remove-Item -Path ./winget-pkgs/.git -Recurse -Force
 
 # install PowerShell-Yaml module
 Install-Module -Name PowerShell-Yaml -Force
