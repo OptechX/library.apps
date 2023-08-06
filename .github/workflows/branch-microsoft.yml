@@ -81,6 +81,7 @@ jobs:
   auto-pr:
     needs: [ "microsoft" ]
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/microsoft'
     steps:
       - uses: actions/checkout@v3
       - name: create pull request
@@ -91,6 +92,7 @@ jobs:
   auto-merge:
     needs: [ "auto-pr", "microsoft" ]
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/microsoft'
     steps:
       - uses: actions/checkout@v3
       - name: merge pull request
