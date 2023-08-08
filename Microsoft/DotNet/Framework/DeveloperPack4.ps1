@@ -24,7 +24,7 @@ foreach ($thisVersion in $versionMajor)
         $yamlInstaller = $yamlContent | ConvertFrom-Yaml
 
         # icon url test
-        $iconUrl = "https://github.com/OptechX/library.apps.images/raw/main/$($env:applicationCategory)/$($yamlLocale.Publisher)/$($yamlLocale.PackageIdentifier)/icon.svg"
+        $iconUrl = "https://github.com/OptechX/library.apps.images/raw/main/$($env:applicationCategory)/$($yamlLocale.Publisher)/$($yamlLocale.PackageIdentifier)/icon.png"
         try {
             $response = Invoke-WebRequest -Uri $iconUrl -Method Head
             if ($response.StatusCode -eq 200)
@@ -33,10 +33,10 @@ foreach ($thisVersion in $versionMajor)
             }
             else
             {
-                $iconUri = ""
+                $iconUri = "https://github.com/OptechX/library.apps.images/raw/main/DEFAULT/icon.png"
             }
         } catch {
-            $iconUri = ""
+            $iconUri = "https://github.com/OptechX/library.apps.images/raw/main/DEFAULT/icon.png"
         }
 
         # switch manifest version from locale data
@@ -384,6 +384,7 @@ foreach ($thisVersion in $versionMajor)
         }
     } catch { }
 }
+
 
 
 
