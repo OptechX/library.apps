@@ -3,8 +3,8 @@ on:
   push:
     branches: [ "microsoft" ]
   workflow_dispatch:
-  schedule:
-    - cron: "24 1 * * *"
+  # schedule:
+  #   - cron: "24 1 * * *"
 jobs:
   microsoft:
     runs-on: ubuntu-latest
@@ -81,6 +81,7 @@ jobs:
   auto-pr:
     needs: [ "microsoft" ]
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/microsoft'
     steps:
       - uses: actions/checkout@v3
       - name: create pull request
@@ -91,9 +92,10 @@ jobs:
   auto-merge:
     needs: [ "auto-pr", "microsoft" ]
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/microsoft'
     steps:
       - uses: actions/checkout@v3
       - name: merge pull request
-        run: gh pr merge --squash
+        run: gh pr merge --merge
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN_OPTECHX }}
