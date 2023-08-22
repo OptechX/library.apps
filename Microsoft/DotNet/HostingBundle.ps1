@@ -24,7 +24,7 @@ foreach ($thisVersion in $versionMajor)
         $yamlInstaller = $yamlContent | ConvertFrom-Yaml
 
         # icon url test
-        $iconUrl = "https://github.com/OptechX/library.apps.images/raw/main/$($env:applicationCategory)/$($yamlLocale.Publisher)/$($yamlLocale.PackageIdentifier)/icon.png"
+        $iconUrl = "https://raw.githubusercontent.com/OptechX/library.apps.images/main/$($env:applicationCategory)/$($yamlLocale.Publisher.Replace(" ","%20"))/$($yamlLocale.PackageIdentifier)/icon.png"
         try {
             $response = Invoke-WebRequest -Uri $iconUrl -Method Head
             if ($response.StatusCode -eq 200)
