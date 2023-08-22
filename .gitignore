@@ -16,6 +16,13 @@ test/*
 .DS_Store
 bin/oxlaut
 winget-pkgs/*
+*.exe
+
+# Json Library Files
+*x86.json
+*x64.json
+*_x64_ingestScript.json
+*_x86_ingestScript.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -356,3 +363,4 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 Microsoft-365/config/tmp.txt
+Microsoft/DotNet/Framework/DeveloperPack4.ps1
