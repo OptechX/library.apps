@@ -1,5 +1,5 @@
-# Microsoft.PowerShell
-$pRoot = "./winget-pkgs/manifests/m/Microsoft.PowerShell"
+# Microsoft/PowerShell
+$pRoot = "./winget-pkgs/manifests/m/Microsoft/PowerShell"
 $versionMajor = Get-ChildItem -Path $pRoot -Directory
 
 try {

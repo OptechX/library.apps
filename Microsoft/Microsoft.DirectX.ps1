@@ -1,5 +1,5 @@
-# Microsoft.DirectX
-$pRoot = "./winget-pkgs/manifests/m/Microsoft.DirectX"
+# Microsoft/DirectX
+$pRoot = "./winget-pkgs/manifests/m/Microsoft/DirectX"
 $versionMajor = Get-ChildItem -Path $pRoot -Directory
 
 try {

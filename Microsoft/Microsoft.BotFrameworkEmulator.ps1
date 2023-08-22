@@ -1,5 +1,5 @@
-# Microsoft.BotFrameworkEmulator
-$pRoot = "./winget-pkgs/manifests/m/Microsoft.BotFrameworkEmulator"
+# Microsoft/BotFrameworkEmulator
+$pRoot = "./winget-pkgs/manifests/m/Microsoft/BotFrameworkEmulator"
 $versionMajor = Get-ChildItem -Path $pRoot -Directory
 
 try {

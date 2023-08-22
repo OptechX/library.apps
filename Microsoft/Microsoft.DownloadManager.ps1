@@ -1,5 +1,5 @@
-# Microsoft.DownloadManager
-$pRoot = "./winget-pkgs/manifests/m/Microsoft.DownloadManager"
+# Microsoft/DownloadManager
+$pRoot = "./winget-pkgs/manifests/m/Microsoft/DownloadManager"
 $versionMajor = Get-ChildItem -Path $pRoot -Directory
 
 try {
