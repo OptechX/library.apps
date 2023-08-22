@@ -38,9 +38,10 @@ foreach ($ps1_file in $ps1_files)
 }
 
 # execute update
+Get-ChildItem -Path ./lib/functions -Recurse -Filter "*.json" | Where-Object { $_.Name -match 'x86_ingestScript.json|x64_ingestScript.json' } | ForEach-Object { Move-Item -Path $_.FullName -Destination $Env:applicationCategory/ -Force -Confirm:$false }
 $json_files = Get-ChildItem -Path $Env:applicationCategory -Recurse -Filter "*.json" | Where-Object { $_.Name -match 'x86_ingestScript.json|x64_ingestScript.json' }
 foreach ($json_file in $json_files)
 {
     Write-Output "Starting $($json_file.FullName)"
-    & ./bin/oxlaut --json "${json_file}"
+    #& ./bin/oxlaut --json "${json_file}"
 }

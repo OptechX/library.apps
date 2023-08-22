@@ -40,7 +40,7 @@ function Invoke-JsonBuilder {
         $yamlInstaller = $yamlContent | ConvertFrom-Yaml
         
         # icon url test
-        $iconUrl = "https://github.com/OptechX/library.apps.images/raw/main/$($env:applicationCategory)/$($yamlLocale.Publisher)/$($yamlLocale.PackageIdentifier)/icon.svg"
+        $iconUrl = "https://github.com/OptechX/library.apps.images/raw/main/$($env:applicationCategory)/$($yamlLocale.Publisher)/$($yamlLocale.PackageIdentifier)/icon.png"
         try {
             $response = Invoke-WebRequest -Uri $iconUrl -Method Head
             if ($response.StatusCode -eq 200)
@@ -49,11 +49,11 @@ function Invoke-JsonBuilder {
             }
             else
             {
-                $iconUri = ""
+                $iconUri = "https://raw.githubusercontent.com/OptechX/library.apps.images/main/DEFAULT/icon.png"
             }
         } 
         catch {
-            $iconUri = ""
+            $iconUri = "https://raw.githubusercontent.com/OptechX/library.apps.images/main/DEFAULT/icon.png"
         }
         
         # build the json output
@@ -95,11 +95,11 @@ function Invoke-JsonBuilder {
             }
             else
             {
-                $iconUri = ""
+                $iconUri = "https://raw.githubusercontent.com/OptechX/library.apps.images/main/DEFAULT/icon.png"
             }
         } 
         catch {
-            $iconUri = ""
+            $iconUri = "https://raw.githubusercontent.com/OptechX/library.apps.images/main/DEFAULT/icon.png"
         }
         
         # build the json output
@@ -146,11 +146,11 @@ function Invoke-JsonBuilder {
                 }
                 else
                 {
-                    $iconUri = ""
+                    $iconUri = "https://raw.githubusercontent.com/OptechX/library.apps.images/main/DEFAULT/icon.png"
                 }
             } 
             catch {
-                $iconUri = ""
+                $iconUri = "https://raw.githubusercontent.com/OptechX/library.apps.images/main/DEFAULT/icon.png"
             }
 
             # build the json output
