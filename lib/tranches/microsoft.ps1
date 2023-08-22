@@ -43,5 +43,5 @@ $json_files = Get-ChildItem -Path $Env:applicationCategory -Recurse -Filter "*.j
 foreach ($json_file in $json_files)
 {
     Write-Output "Starting $($json_file.FullName)"
-    #& ./bin/oxlaut --json "${json_file}"
+    & ./bin/oxlaut --json "${json_file}"
 }
