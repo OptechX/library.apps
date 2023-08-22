@@ -3,8 +3,8 @@ on:
   push:
     branches: [ "microsoft" ]
   workflow_dispatch:
-  # schedule:
-  #   - cron: "24 1 * * *"
+  schedule:
+    - cron: "24 1 * * *"
 jobs:
   microsoft:
     runs-on: ubuntu-latest
