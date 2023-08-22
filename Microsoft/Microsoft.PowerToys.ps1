@@ -1,5 +1,5 @@
-# Microsoft.PowerToys
-$pRoot = "./winget-pkgs/manifests/m/Microsoft.PowerToys"
+# Microsoft/PowerToys
+$pRoot = "./winget-pkgs/manifests/m/Microsoft/PowerToys"
 $versionMajor = Get-ChildItem -Path $pRoot -Directory
 
 try {

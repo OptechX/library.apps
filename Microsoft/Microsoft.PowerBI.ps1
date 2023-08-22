@@ -1,5 +1,5 @@
-# Microsoft.PowerBI
-$pRoot = "./winget-pkgs/manifests/m/Microsoft.PowerBI"
+# Microsoft/PowerBI
+$pRoot = "./winget-pkgs/manifests/m/Microsoft/PowerBI"
 $versionMajor = Get-ChildItem -Path $pRoot -Directory
 
 try {

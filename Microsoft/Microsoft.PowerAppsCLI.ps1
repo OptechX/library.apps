@@ -1,5 +1,5 @@
-# Microsoft.PowerAppsCLI
-$pRoot = "./winget-pkgs/manifests/m/Microsoft.PowerAppsCLI"
+# Microsoft/PowerAppsCLI
+$pRoot = "./winget-pkgs/manifests/m/Microsoft/PowerAppsCLI"
 $versionMajor = Get-ChildItem -Path $pRoot -Directory
 
 try {

@@ -1,5 +1,5 @@
-# Micrsoft.PowerShell
-$pRoot = "./winget-pkgs/manifests/m/Micrsoft.PowerShell"
+# Microsoft/Teams
+$pRoot = "./winget-pkgs/manifests/m/Microsoft/Teams"
 $versionMajor = Get-ChildItem -Path $pRoot -Directory
 
 try {
