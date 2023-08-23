@@ -41,6 +41,7 @@ function Invoke-JsonBuilder {
         
         # icon url test
         $iconUrl = "https://github.com/OptechX/library.apps.images/raw/main/$($env:applicationCategory)/$($yamlLocale.Publisher)/$($yamlLocale.PackageIdentifier)/icon.png"
+        Write-Output $iconUrl
         try {
             $response = Invoke-WebRequest -Uri $iconUrl -Method Head
             if ($response.StatusCode -eq 200)
