@@ -22,11 +22,17 @@ try {
     Remove-Item -Path ./winget-pkgs/.git -Recurse -Force -ErrorAction SilentlyContinue
 }
 catch {
-    
+    # do nothing
 }
 
 # install PowerShell-Yaml module
-Install-Module -Name PowerShell-Yaml -Force
+try {
+    Install-Module -Name PowerShell-Yaml -Force
+}
+catch {
+    # do nothing
+}
+
 
 # process ps1 files
 $ps1_files = Get-ChildItem -Path $Env:applicationCategory -Recurse -Filter "*.ps1"
