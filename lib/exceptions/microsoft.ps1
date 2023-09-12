@@ -51,6 +51,7 @@ $applicationIcons = @{
     "Microsoft.Edge.Dev" = "https://github.com/OptechX/library.apps.images/raw/main/Microsoft/Microsoft Corporation/Microsoft.Edge.Dev/icon.png"
     "Microsoft.Edge.Canary" = "https://github.com/OptechX/library.apps.images/raw/main/Microsoft/Microsoft Corporation/Microsoft.Edge.Canary/icon.png"
     "Microsoft.IronPython.2" = "https://github.com/OptechX/library.apps.images/raw/main/Microsoft/IronPython Team/Microsoft.IronPython.2/icon.png"
+    "Microsoft.OneDrive" = "https://github.com/OptechX/library.apps.images/raw/main/Microsoft/Microsoft Corporation/Microsoft.OneDrive/icon.png"
 }
 
 # Iterate over the dictionary and call the function
