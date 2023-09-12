@@ -30,7 +30,12 @@ function Invoke-JsonBuilder {
         $currentVersion = [string]$highestVersion
         
         # locale data
-        $yamlPath = Get-ChildItem -Path $pRoot/$currentVersion -Filter "*locale.en-US.yaml" | Select-Object -ExpandProperty FullName
+        try {
+            $yamlPath = Get-ChildItem -Path $pRoot/$currentVersion -Filter "*locale.en-US.yaml" -ErrorAction Stop | Select-Object -ExpandProperty FullName
+        }
+        catch {
+            continue
+        }
         $yamlContent = Get-Content -Path $yamlPath -Raw
         $yamlLocale = $yamlContent | ConvertFrom-Yaml
         
